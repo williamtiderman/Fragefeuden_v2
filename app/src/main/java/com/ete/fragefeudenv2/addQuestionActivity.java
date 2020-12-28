@@ -36,31 +36,30 @@ public class addQuestionActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                root = FirebaseDatabase.getInstance();
-                myRef = root.getReference("questions");
+                if (noEmptyValues()) {
+                    root = FirebaseDatabase.getInstance();
+                    myRef = root.getReference("questions");
 
 
-                questionString = question.getText().toString();
-                correctString = correct.getText().toString();
-                wrong1String = wrong1.getText().toString();
-                wrong2String = wrong2.getText().toString();
-                wrong3String = wrong3.getText().toString();
-                databaseAddQuestion addQuestionClass = new databaseAddQuestion(questionString, correctString, wrong1String, wrong2String, wrong3String);
-                myRef.child(questionString).setValue(addQuestionClass);
+                    questionString = question.getText().toString();
+                    correctString = correct.getText().toString();
+                    wrong1String = wrong1.getText().toString();
+                    wrong2String = wrong2.getText().toString();
+                    wrong3String = wrong3.getText().toString();
+                    databaseAddQuestion addQuestionClass = new databaseAddQuestion(questionString, correctString, wrong1String, wrong2String, wrong3String);
+                    myRef.child(questionString).setValue(addQuestionClass);
 
-                //TODO skicka värden till databas
+                    question.setText("");
+                    correct.setText("");
+                    wrong1.setText("");
+                    wrong2.setText("");
+                    wrong3.setText("");
 
-                question.setText("");
-                correct.setText("");
-                wrong1.setText("");
-                wrong2.setText("");
-                wrong3.setText("");
-
-                Context context = getApplicationContext();
-                CharSequence text = "Skickad!";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                    Toast.makeText(addQuestionActivity.this, "Skickad!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(addQuestionActivity.this, "Du har ett eller flera tomma fält!", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
