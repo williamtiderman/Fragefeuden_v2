@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".gamesActivity"
+    android:background="@color/background">
+
+    <Button
+        android:id="@+id/spel3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="Fritt"
+        android:onClick="startaSpel3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spel2"
+        app:layout_constraintVertical_bias=".03"
+        app:layout_constraintStart_toStartOf="@+id/spel2"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/spel2" />
+
+    <Button
+        android:id="@+id/spel2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="Fritt"
+        android:onClick="startaSpel2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spel1"
+        app:layout_constraintStart_toStartOf="@+id/spel1"
+        app:layout_constraintTop_toBottomOf="@+id/spel1"
+        android:visibility="invisible"
+        app:layout_constraintVertical_bias=".03" />
+
+    <Button
+        android:id="@+id/joinGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="joinGame"
+        android:text="Join Game"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spel3"
+        app:layout_constraintVertical_bias=".8" />
+
+    <Button
+        android:id="@+id/startaNytt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="createNewGame"
+        android:text="Starta nytt spel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".1" />
+
+    <Button
+        android:id="@+id/spel0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="Fritt"
+        android:onClick="startaSpel0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias=".1"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/startaNytt" />
+
+    <Button
+        android:id="@+id/spel1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="Fritt"
+        android:onClick="startaSpel1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias=".03"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/spel0" />
+
+    <EditText
+        android:id="@+id/joinGameNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="4"
+        android:ems="10"
+        android:hint="Spel-ID"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/joinGame"
+        app:layout_constraintEnd_toEndOf="@+id/joinGame"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="@+id/joinGame"
+        app:layout_constraintTop_toBottomOf="@+id/spel3"
+        app:layout_constraintVertical_bias=".9" />
+</androidx.constraintlayout.widget.ConstraintLayout>
