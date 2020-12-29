@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".GameplayActivity">
 
+    <TextView
+        android:id="@+id/questionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:padding="10dp"
+        android:text="Frågan står här?"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/optionButton1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/optionButton1"
         android:layout_width="0dp"
