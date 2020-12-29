@@ -1,17 +1,24 @@
 package com.ete.fragefeudenv2;
 
-public class databasePlayers {
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class databasePlayers  {
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
     private String playerOne, playerTwo;
+    gamesActivity gamesActivity;
+    DatabaseReference myRef;
+    FirebaseDatabase root;
 
-    public databasePlayers(int gameID, String playerOne){
+    public databasePlayers(int gameID, String playerOne, String playerTwo, int playerOnePoints, int playerTwoPoints, int gameRound){
         this.gameID = gameID;
         this.playerOne = playerOne;
         this.playerTwo = null;
         this.playerOnePoints = 0;
         this.playerTwoPoints = 0;
         this.gameRound = 0;
-        this.gameStart();
     }
     public void gameStart(){
 

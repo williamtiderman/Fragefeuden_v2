@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,8 +23,10 @@ public class gamesActivity extends AppCompatActivity {
 
     private List<Game> gameList = new ArrayList<>();
     Player player;
-
-
+    DatabaseReference myRef;
+    FirebaseDatabase root;
+    private int gameID, gameRound, playerOnePoints, playerTwoPoints;
+    private String playerOne, playerTwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +55,18 @@ public class gamesActivity extends AppCompatActivity {
 
         int numOfGames = player.getGameList().size();
 
+
         //Byt denna när man ska ha mer spel
         if(numOfGames < 4){
             player.getGameList().add(newGame);
 
-            databasePlayers sendGame = new databasePlayers(newGame.getGame_ID(), player.getPlayerName());
+            root = FirebaseDatabase.getInstance();
+            myRef = root.getReference("activeGames");
+
+            gameID = newGame.getGame_ID();
+            playerOne = player.getPlayerName();
+            databasePlayers sendGame = new databasePlayers(gameID, playerOne, playerTwo, playerOnePoints, playerTwoPoints, gameRound);
+            myRef.child(String.valueOf(gameID)).setValue(sendGame);
 
 
             Button spelKnapp = null;
@@ -92,8 +104,6 @@ public class gamesActivity extends AppCompatActivity {
 
         switch(btnClicked){
             case 0:
-
-
 
                 break;
             case 1:
