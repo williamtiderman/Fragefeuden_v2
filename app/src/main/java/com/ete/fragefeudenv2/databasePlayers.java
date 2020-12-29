@@ -11,6 +11,7 @@ public class databasePlayers {
         this.playerOnePoints = 0;
         this.playerTwoPoints = 0;
         this.gameRound = 0;
+        this.gameStart();
     }
     public void gameStart(){
 

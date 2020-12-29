@@ -17,6 +17,9 @@ public class Player {
         this.playerName = playerName;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
 
     public List<Game> getGameList() {
         return gameList;

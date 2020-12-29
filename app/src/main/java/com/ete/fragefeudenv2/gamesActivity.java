@@ -54,7 +54,7 @@ public class gamesActivity extends AppCompatActivity {
         if(numOfGames < 4){
             player.getGameList().add(newGame);
 
-
+            databasePlayers sendGame = new databasePlayers(newGame.getGame_ID(), player.getPlayerName());
 
 
             Button spelKnapp = null;

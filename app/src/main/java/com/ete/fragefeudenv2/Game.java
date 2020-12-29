@@ -30,4 +30,7 @@ public class Game {
         this.usedQuestions.add(questionID);
     }
 
+    public int getGame_ID() {
+        return game_ID;
+    }
 }
