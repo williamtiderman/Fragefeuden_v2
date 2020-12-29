@@ -55,6 +55,8 @@ public class gamesActivity extends AppCompatActivity {
             player.getGameList().add(newGame);
 
 
+
+
             Button spelKnapp = null;
 
             switch(numOfGames){

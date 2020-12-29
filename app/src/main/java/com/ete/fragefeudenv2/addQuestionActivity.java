@@ -24,7 +24,7 @@ public class addQuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_question);
-        Toast.makeText(addQuestionActivity.this, "Connected", Toast.LENGTH_LONG).show();
+        Toast.makeText(addQuestionActivity.this, "Connected to database", Toast.LENGTH_LONG).show();
 
         question = findViewById(R.id.editTextQuestion);
         correct = findViewById(R.id.editTextCorrect);
