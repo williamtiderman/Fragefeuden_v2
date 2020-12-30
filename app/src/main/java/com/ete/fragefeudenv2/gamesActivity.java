@@ -42,8 +42,6 @@ public class gamesActivity extends AppCompatActivity {
 
         String playerName = intent.getStringExtra(Intent.EXTRA_TEXT);
 
-        //Här ska det kollas med databasen om det finns en spelare med det namnet
-
         player = new Player(playerName);
 
         gameList = player.getGameList();
@@ -135,7 +133,7 @@ public class gamesActivity extends AppCompatActivity {
         int gameID = Integer.parseInt(joinGameID.getText().toString());
         /*myRef = FirebaseDatabase.getInstance().getReference("activeGames");
         Query checkGameID = myRef.orderByChild("gameID").equalTo(gameID);*/
-
+        playerTwo = player.getPlayerName();
         myRef = FirebaseDatabase.getInstance().getReference().child("activeGames");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -143,7 +141,7 @@ public class gamesActivity extends AppCompatActivity {
                 int i = 0;
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     if (i == gameID) {
-                        snap.child("playerTwo").getValue(); //skriver till
+                        myRef.child(String.valueOf(gameID)).setValue(playerTwo);
                     }
                     i++;
                 }
