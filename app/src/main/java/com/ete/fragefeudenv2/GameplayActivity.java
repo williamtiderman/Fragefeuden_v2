@@ -26,12 +26,11 @@ public class GameplayActivity extends AppCompatActivity {
 
     DatabaseReference myRef;
     Button clickedButton;
-    String correctString;
     Button optionButton1;
     Button optionButton2;
     Button optionButton3;
     Button optionButton4;
-
+    String questionString, correctString, wrong1String, wrong2String, wrong3String;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,18 +41,17 @@ public class GameplayActivity extends AppCompatActivity {
         optionButton2 = findViewById(R.id.optionButton2);
         optionButton3 = findViewById(R.id.optionButton3);
         optionButton4 = findViewById(R.id.optionButton4);
-
         myRef = FirebaseDatabase.getInstance().getReference().child("questions");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int numberOfQuestions = (int) snapshot.getChildrenCount();
                 int randomQuestionIndex = new Random().nextInt(numberOfQuestions);
-                String questionString = "";
+                questionString = "";
                 correctString = "";
-                String wrong1String = "";
-                String wrong2String = "";
-                String wrong3String = "";
+                wrong1String = "";
+                wrong2String = "";
+                wrong3String = "";
 
                 //Bästa sättet jag hittade att slumpa fram en fråga
                 int i = 0;
