@@ -12,7 +12,7 @@ public class databasePlayers  {
     public databasePlayers(int gameID, String playerOne, String playerTwo, int playerOnePoints, int playerTwoPoints, int gameRound){
         this.gameID = gameID;
         this.playerOne = playerOne;
-        this.playerTwo = null;
+        this.playerTwo = "";
         this.playerOnePoints = 0;
         this.playerTwoPoints = 0;
         this.gameRound = 0;
