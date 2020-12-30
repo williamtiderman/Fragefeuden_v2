@@ -32,6 +32,7 @@ public class gamesActivity extends AppCompatActivity {
     FirebaseDatabase root;
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
     private String playerOne, playerTwo;
+    boolean gameExists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +135,26 @@ public class gamesActivity extends AppCompatActivity {
         EditText joinGameID = (EditText) findViewById(R.id.joinGameNumber);
         int gameID = Integer.parseInt(joinGameID.getText().toString());
         playerTwo = player.getPlayerName();
+        gameExists = false;
         myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
-        myRef.child("playerTwo").setValue(playerTwo);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    gameExists = true;
+                }
+                if (gameExists) {
+                    myRef.child("playerTwo").setValue(playerTwo);
+                }
+                else {
+                    Toast.makeText(gamesActivity.this, "Spelet hittades ej!", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void startaSpel0(View view){
@@ -149,5 +168,11 @@ public class gamesActivity extends AppCompatActivity {
     }
     public void startaSpel3(View view){
         continueGame(view, 3);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent onBackIntent = new Intent(gamesActivity.this, HomeActivity.class);
+        startActivity(onBackIntent);
     }
 }

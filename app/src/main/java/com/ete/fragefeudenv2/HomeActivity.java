@@ -33,4 +33,12 @@ public class HomeActivity extends AppCompatActivity {
         Intent addQuestionIntent = new Intent(HomeActivity.this, addQuestionActivity.class);
         startActivity(addQuestionIntent);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent quitIntent = new Intent(Intent.ACTION_MAIN);
+        quitIntent.addCategory(Intent.CATEGORY_HOME);
+        quitIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(quitIntent);
+    }
 }

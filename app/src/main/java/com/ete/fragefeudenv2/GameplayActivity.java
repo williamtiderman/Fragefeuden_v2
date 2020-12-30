@@ -194,6 +194,11 @@ public class GameplayActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        // Tom så att man inte kan backa ur spel
+    }
+
     public boolean questionUsed() {
         //SKRIV METOD SOM KOLLAR OM FRÅGAN ÄR ANVÄND HÄR
         if (true) {
