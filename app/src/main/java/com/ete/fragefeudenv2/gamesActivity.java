@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,6 +129,13 @@ public class gamesActivity extends AppCompatActivity {
     public void joinGame(View view){
         EditText joinGameID = (EditText) findViewById(R.id.joinGameNumber);
         int gameID = Integer.parseInt(joinGameID.getText().toString());
+        myRef = FirebaseDatabase.getInstance().getReference("activeGames");
+        Query checkGameID = myRef.orderByChild("gameID").equalTo(gameID);
+
+
+
+
+
 
 
     }
