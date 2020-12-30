@@ -114,7 +114,7 @@ public class GameplayActivity extends AppCompatActivity {
                     i++;
                 }
 
-                if (questionUsed()) getNewQuestion();
+                //if (!questionUsed()) getNewQuestion();
 
                 ArrayList<String> optionsList = new ArrayList<String>();
                 optionsList.add(correctString);
