@@ -190,7 +190,6 @@ public class GameplayActivity extends AppCompatActivity {
         else {
             Intent onClickIntent = new Intent(GameplayActivity.this, gamesActivity.class);
             startActivity(onClickIntent);
-            Toast.makeText(GameplayActivity.this, "Motståndarens tur!", Toast.LENGTH_LONG).show();
         }
     }
 

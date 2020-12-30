@@ -20,6 +20,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -32,8 +33,9 @@ public class gamesActivity extends AppCompatActivity {
     FirebaseDatabase root;
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
     private String playerOne, playerTwo;
+    private Button spelKnapp;
     private boolean gameExists;
-    private Button spelKnapp = null;
+    private int foundGameID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,25 +48,78 @@ public class gamesActivity extends AppCompatActivity {
 
         //Här ska det kollas med databasen om det finns en spelare med det namnet
 
-        player = new Player(playerName);
+        Button spel0Knapp = findViewById(R.id.spel0);
+        Button spel1Knapp = findViewById(R.id.spel1);
+        Button spel2Knapp = findViewById(R.id.spel2);
+        Button spel3Knapp = findViewById(R.id.spel3);
+        Button createNewGameButton = findViewById(R.id.startaNytt);
+        Button joinGameButton = findViewById(R.id.joinGame);
 
-        gameList = player.getGameList();
+        createNewGameButton.setEnabled(false);
+        joinGameButton.setEnabled(false);
+        createNewGameButton.setText("Laddar Aktiva Spel...");
+
+        //Hämtar spelarens aktiva spel från databasen
+        myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                player = new Player(playerName);
+
+                if (snapshot.child("Game0ID").exists()) {
+                    String gameIDString = snapshot.child("Game0ID").getValue().toString();
+                    spel0Knapp.setText(gameIDString);
+                    spel0Knapp.setVisibility(View.VISIBLE);
+                    foundGameID = Integer.parseInt(gameIDString);
+                    player.getGameList().add(new Game(foundGameID));
+                }
+                if (snapshot.child("Game1ID").exists()) {
+                    String gameIDString = snapshot.child("Game1ID").getValue().toString();
+                    spel1Knapp.setText(gameIDString);
+                    spel1Knapp.setVisibility(View.VISIBLE);
+                    foundGameID = Integer.parseInt(gameIDString);
+                    player.getGameList().add(new Game(foundGameID));
+                }
+                if (snapshot.child("Game2ID").exists()) {
+                    String gameIDString = snapshot.child("Game2ID").getValue().toString();
+                    spel2Knapp.setText(gameIDString);
+                    spel2Knapp.setVisibility(View.VISIBLE);
+                    foundGameID = Integer.parseInt(gameIDString);
+                    player.getGameList().add(new Game(foundGameID));
+                }
+                if (snapshot.child("Game3ID").exists()) {
+                    String gameIDString = snapshot.child("Game3ID").getValue().toString();
+                    spel3Knapp.setText(gameIDString);
+                    spel3Knapp.setVisibility(View.VISIBLE);
+                    foundGameID = Integer.parseInt(gameIDString);
+                    player.getGameList().add(new Game(foundGameID));
+                }
+                createNewGameButton.setText("Skapa Nytt Spel");
+                createNewGameButton.setEnabled(true);
+                joinGameButton.setEnabled(true);
+
+                gameList = player.getGameList();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
     //Denna kallas när man startar nytt game
-    public void createNewGame(View view){
+    public void createNewGame(View view) {
         Random rand = new Random();
         final int TALTAK = 9999;
         int int_random = rand.nextInt(TALTAK);
+        int numOfGames = player.getGameList().size();
 
         Game newGame = new Game(int_random);
 
-        int numOfGames = player.getGameList().size();
-
-
         //Byt denna när man ska ha mer spel
-        if(numOfGames < 4){
+        if (numOfGames < 4) {
             player.getGameList().add(newGame);
 
             root = FirebaseDatabase.getInstance();
@@ -73,8 +128,6 @@ public class gamesActivity extends AppCompatActivity {
             gameID = newGame.getGame_ID();
             playerOne = player.getPlayerName();
 
-            
-
 
             databasePlayers sendGame = new databasePlayers(gameID, playerOne, playerTwo, playerOnePoints, playerTwoPoints, gameRound);
             myRef.child(String.valueOf(gameID)).setValue(sendGame);
@@ -82,10 +135,9 @@ public class gamesActivity extends AppCompatActivity {
             myRef = root.getReference("players");
 
 
-
             spelKnapp = null;
 
-            switch(numOfGames){
+            switch (numOfGames) {
                 case 0:
                     spelKnapp = (Button) findViewById(R.id.spel0);
                     player.setGame0ID(int_random);
@@ -110,20 +162,19 @@ public class gamesActivity extends AppCompatActivity {
 
             spelKnapp.setText(String.valueOf(int_random));
             spelKnapp.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
             toast.show();
         }
     }
 
     //Denna kallas när man fortsätter ett spel som redan är igång
-    public void continueGame(View view, int btnClicked){
+    public void continueGame(View view, int btnClicked) {
         int gameNumber;
         Intent onClickIntent = new Intent(gamesActivity.this, GameplayActivity.class);
 
         //Här skickas bara en siffra med till gameplay activity för att indikera vilket spel/knapp man tryckte på
-        switch(btnClicked){
+        switch (btnClicked) {
             case 0:
                 gameNumber = player.getGame0ID();
                 break;
@@ -143,13 +194,12 @@ public class gamesActivity extends AppCompatActivity {
         startActivity(onClickIntent);
     }
 
-    public void joinGame(View view){
+    public void joinGame(View view) {
         int numOfGames = player.getGameList().size();
-
-        if(numOfGames < 4) {
-
+        if (numOfGames < 4) {
             EditText joinGameID = (EditText) findViewById(R.id.joinGameNumber);
-            int gameID = Integer.parseInt(joinGameID.getText().toString());
+            String inputID = joinGameID.getText().toString();
+            int gameID = Integer.parseInt(inputID);
             playerTwo = player.getPlayerName();
             gameExists = false;
 
@@ -160,7 +210,6 @@ public class gamesActivity extends AppCompatActivity {
                     if (snapshot.exists()) { //Om spelet finns
                         myRef.child("playerTwo").setValue(playerTwo);
                         player.getGameList().add(new Game(gameID));
-
                         myRef = FirebaseDatabase.getInstance().getReference().child("players");
                         switch (numOfGames) {
                             case 0:
@@ -197,23 +246,25 @@ public class gamesActivity extends AppCompatActivity {
                     Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
                 }
             });
-        }
-        else {
+        } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
             toast.show();
         }
     }
 
-    public void startaSpel0(View view){
+    public void startaSpel0(View view) {
         continueGame(view, 0);
     }
-    public void startaSpel1(View view){
+
+    public void startaSpel1(View view) {
         continueGame(view, 1);
     }
-    public void startaSpel2(View view){
+
+    public void startaSpel2(View view) {
         continueGame(view, 2);
     }
-    public void startaSpel3(View view){
+
+    public void startaSpel3(View view) {
         continueGame(view, 3);
     }
 
