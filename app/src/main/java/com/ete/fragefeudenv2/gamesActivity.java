@@ -70,6 +70,10 @@ public class gamesActivity extends AppCompatActivity {
 
             gameID = newGame.getGame_ID();
             playerOne = player.getPlayerName();
+
+            
+
+
             databasePlayers sendGame = new databasePlayers(gameID, playerOne, playerTwo, playerOnePoints, playerTwoPoints, gameRound);
             myRef.child(String.valueOf(gameID)).setValue(sendGame);
 
@@ -83,22 +87,22 @@ public class gamesActivity extends AppCompatActivity {
                 case 0:
                     spelKnapp = (Button) findViewById(R.id.spel0);
                     player.setGame0ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).child("GameID").setValue(player.getGame0ID());
+                    myRef.child(String.valueOf(player.getPlayerName())).child("Game0ID").setValue(player.getGame0ID());
                     break;
                 case 1:
                     spelKnapp = (Button) findViewById(R.id.spel1);
                     player.setGame1ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).child("GameID").setValue(player.getGame1ID());
+                    myRef.child(String.valueOf(player.getPlayerName())).child("Game1ID").setValue(player.getGame1ID());
                     break;
                 case 2:
                     spelKnapp = (Button) findViewById(R.id.spel2);
                     player.setGame2ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).child("GameID").setValue(player.getGame2ID());
+                    myRef.child(String.valueOf(player.getPlayerName())).child("Game2ID").setValue(player.getGame2ID());
                     break;
                 case 3:
                     spelKnapp = (Button) findViewById(R.id.spel3);
                     player.setGame3ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).child("GameID").setValue(player.getGame3ID());
+                    myRef.child(String.valueOf(player.getPlayerName())).child("Game3ID").setValue(player.getGame3ID());
                     break;
             }
 
@@ -119,16 +123,16 @@ public class gamesActivity extends AppCompatActivity {
         //Här skickas bara en siffra med till gameplay activity för att indikera vilket spel/knapp man tryckte på
         switch(btnClicked){
             case 0:
-                gameNumber = 0;
+                gameNumber = player.getGame0ID();
                 break;
             case 1:
-                gameNumber = 1;
+                gameNumber = player.getGame1ID();
                 break;
             case 2:
-                gameNumber = 2;
+                gameNumber = player.getGame2ID();
                 break;
             case 3:
-                gameNumber = 3;
+                gameNumber = player.getGame3ID();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + btnClicked);
