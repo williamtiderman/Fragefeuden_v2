@@ -3,7 +3,9 @@ package com.ete.fragefeudenv2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,11 +18,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
-public class GameplayActivity extends AppCompatActivity implements Runnable {
+public class GameplayActivity extends AppCompatActivity {
 
     DatabaseReference myRef;
+    Button clickedButton;
+    String correctString;
+    Button optionButton1;
+    Button optionButton2;
+    Button optionButton3;
+    Button optionButton4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +38,10 @@ public class GameplayActivity extends AppCompatActivity implements Runnable {
         setContentView(R.layout.activity_gameplay);
 
         TextView questionTextBox = findViewById(R.id.questionText);
-        Button optionButton1 = findViewById(R.id.optionButton1);
-        Button optionButton2 = findViewById(R.id.optionButton2);
-        Button optionButton3 = findViewById(R.id.optionButton3);
-        Button optionButton4 = findViewById(R.id.optionButton4);
-
-
+        optionButton1 = findViewById(R.id.optionButton1);
+        optionButton2 = findViewById(R.id.optionButton2);
+        optionButton3 = findViewById(R.id.optionButton3);
+        optionButton4 = findViewById(R.id.optionButton4);
 
         myRef = FirebaseDatabase.getInstance().getReference().child("questions");
         myRef.addValueEventListener(new ValueEventListener() {
@@ -42,7 +50,7 @@ public class GameplayActivity extends AppCompatActivity implements Runnable {
                 int numberOfQuestions = (int) snapshot.getChildrenCount();
                 int randomQuestionIndex = new Random().nextInt(numberOfQuestions);
                 String questionString = "";
-                String correctString = "";
+                correctString = "";
                 String wrong1String = "";
                 String wrong2String = "";
                 String wrong3String = "";
@@ -61,11 +69,19 @@ public class GameplayActivity extends AppCompatActivity implements Runnable {
                     }
                     i++;
                 }
+
+                ArrayList<String> optionsList = new ArrayList<String>();
+                optionsList.add(correctString);
+                optionsList.add(wrong1String);
+                optionsList.add(wrong2String);
+                optionsList.add(wrong3String);
+                Collections.shuffle(optionsList);
+
                 questionTextBox.setText(questionString);
-                optionButton1.setText(correctString);
-                optionButton2.setText(wrong1String);
-                optionButton3.setText(wrong2String);
-                optionButton4.setText(wrong3String);
+                optionButton1.setText(optionsList.get(0));
+                optionButton2.setText(optionsList.get(1));
+                optionButton3.setText(optionsList.get(2));
+                optionButton4.setText(optionsList.get(3));
             }
 
             @Override
@@ -75,10 +91,39 @@ public class GameplayActivity extends AppCompatActivity implements Runnable {
         });
     }
 
-    @Override
-    public void run() {
-        try {
+    public void checkAnswer() {
+        //TextView resultText = findViewById(R.id.resultTextView);
+        if (clickedButton.getText().equals(correctString)) {
+            clickedButton.setBackgroundColor(Color.GREEN);
+            //resultText.setText("Rätt!");
+        }
+        else {
+            clickedButton.setBackgroundColor(Color.RED);
+            //resultText.setText("Fel!");
+            if (optionButton1.getText().equals(correctString)) optionButton1.setBackgroundColor(Color.GREEN);
+            else if (optionButton2.getText().equals(correctString)) optionButton2.setBackgroundColor(Color.GREEN);
+            else if (optionButton3.getText().equals(correctString)) optionButton3.setBackgroundColor(Color.GREEN);
+            else if (optionButton4.getText().equals(correctString)) optionButton4.setBackgroundColor(Color.GREEN);
+        }
+    }
 
-        } catch (Exception e) {}
+    public void onClickOption1Button(View view) {
+        clickedButton = findViewById(R.id.optionButton1);
+        checkAnswer();
+    }
+
+    public void onClickOption2Button(View view) {
+        clickedButton = findViewById(R.id.optionButton2);
+        checkAnswer();
+    }
+
+    public void onClickOption3Button(View view) {
+        clickedButton = findViewById(R.id.optionButton3);
+        checkAnswer();
+    }
+
+    public void onClickOption4Button(View view) {
+        clickedButton = findViewById(R.id.optionButton4);
+        checkAnswer();
     }
 }
