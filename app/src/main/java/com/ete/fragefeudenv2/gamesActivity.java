@@ -32,7 +32,8 @@ public class gamesActivity extends AppCompatActivity {
     FirebaseDatabase root;
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
     private String playerOne, playerTwo;
-    boolean gameExists;
+    private boolean gameExists;
+    private Button spelKnapp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,7 @@ public class gamesActivity extends AppCompatActivity {
 
 
 
-            Button spelKnapp = null;
+            spelKnapp = null;
 
             switch(numOfGames){
                 case 0:
@@ -143,29 +144,64 @@ public class gamesActivity extends AppCompatActivity {
     }
 
     public void joinGame(View view){
-        EditText joinGameID = (EditText) findViewById(R.id.joinGameNumber);
-        int gameID = Integer.parseInt(joinGameID.getText().toString());
-        playerTwo = player.getPlayerName();
-        gameExists = false;
-        myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    gameExists = true;
+        int numOfGames = player.getGameList().size();
+
+        if(numOfGames < 4) {
+
+            EditText joinGameID = (EditText) findViewById(R.id.joinGameNumber);
+            int gameID = Integer.parseInt(joinGameID.getText().toString());
+            playerTwo = player.getPlayerName();
+            gameExists = false;
+
+            myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) { //Om spelet finns
+                        myRef.child("playerTwo").setValue(playerTwo);
+                        player.getGameList().add(new Game(gameID));
+
+                        myRef = FirebaseDatabase.getInstance().getReference().child("players");
+                        switch (numOfGames) {
+                            case 0:
+                                spelKnapp = (Button) findViewById(R.id.spel0);
+                                player.setGame0ID(gameID);
+                                myRef.child(String.valueOf(player.getPlayerName())).child("Game0ID").setValue(player.getGame0ID());
+                                break;
+                            case 1:
+                                spelKnapp = (Button) findViewById(R.id.spel1);
+                                player.setGame1ID(gameID);
+                                myRef.child(String.valueOf(player.getPlayerName())).child("Game1ID").setValue(player.getGame1ID());
+                                break;
+                            case 2:
+                                spelKnapp = (Button) findViewById(R.id.spel2);
+                                player.setGame2ID(gameID);
+                                myRef.child(String.valueOf(player.getPlayerName())).child("Game2ID").setValue(player.getGame2ID());
+                                break;
+                            case 3:
+                                spelKnapp = (Button) findViewById(R.id.spel3);
+                                player.setGame3ID(gameID);
+                                myRef.child(String.valueOf(player.getPlayerName())).child("Game3ID").setValue(player.getGame3ID());
+                                break;
+                        }
+
+                        spelKnapp.setText(String.valueOf(gameID));
+                        spelKnapp.setVisibility(View.VISIBLE);
+                    } else { //om spelet inte finns
+                        Toast.makeText(gamesActivity.this, "Spelet hittades ej!", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                if (gameExists) {
-                    myRef.child("playerTwo").setValue(playerTwo);
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
                 }
-                else {
-                    Toast.makeText(gamesActivity.this, "Spelet hittades ej!", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
-            }
-        });
+            });
+        }
+        else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     public void startaSpel0(View view){
