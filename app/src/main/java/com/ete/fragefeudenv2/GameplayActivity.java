@@ -3,6 +3,7 @@ package com.ete.fragefeudenv2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -26,44 +27,98 @@ public class GameplayActivity extends AppCompatActivity {
 
     DatabaseReference myRef;
     Button clickedButton;
+    String correctString;
+    TextView questionTextBox;
     Button optionButton1;
     Button optionButton2;
     Button optionButton3;
     Button optionButton4;
-    String questionString, correctString, wrong1String, wrong2String, wrong3String;
+    Button nextQuestionButton;
+    TextView resultText;
+
+    ArrayList<String> usedQuestionsList = new ArrayList<String>();
+
+    int answeredQuestions = 0;
+    int correctAnswers = 0;
+    int wrongAnswers = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
 
-        TextView questionTextBox = findViewById(R.id.questionText);
+        questionTextBox = findViewById(R.id.questionText);
         optionButton1 = findViewById(R.id.optionButton1);
         optionButton2 = findViewById(R.id.optionButton2);
         optionButton3 = findViewById(R.id.optionButton3);
         optionButton4 = findViewById(R.id.optionButton4);
+        nextQuestionButton = findViewById(R.id.nextQuestionButton);
+        resultText = findViewById(R.id.resultTextView);
+
+        reset();
+        getNewQuestion();
+    }
+
+    public void checkAnswer() {
+        optionButton1.setEnabled(false);
+        optionButton2.setEnabled(false);
+        optionButton3.setEnabled(false);
+        optionButton4.setEnabled(false);
+        if (clickedButton.getText().equals(correctString)) {
+            //Om man har rätt
+            correctAnswers++;
+            clickedButton.setBackgroundColor(Color.GREEN);
+            resultText.setText("RÄTT!");
+        }
+        else {
+            //Om man har fel
+            clickedButton.setBackgroundColor(Color.RED); //Sätt tryckt knapp till röd
+            resultText.setText("FEL!");
+            //Sätt rätt svar till grön så man ser vad som var rätt
+            wrongAnswers++;
+            if (optionButton1.getText().equals(correctString)) optionButton1.setBackgroundColor(Color.GREEN);
+            else if (optionButton2.getText().equals(correctString)) optionButton2.setBackgroundColor(Color.GREEN);
+            else if (optionButton3.getText().equals(correctString)) optionButton3.setBackgroundColor(Color.GREEN);
+            else if (optionButton4.getText().equals(correctString)) optionButton4.setBackgroundColor(Color.GREEN);
+        }
+        answeredQuestions++;
+        nextQuestionButton.setVisibility(View.VISIBLE);
+    }
+
+    public void getNewQuestion() {
+
         myRef = FirebaseDatabase.getInstance().getReference().child("questions");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int numberOfQuestions = (int) snapshot.getChildrenCount();
                 int randomQuestionIndex = new Random().nextInt(numberOfQuestions);
-                questionString = "";
+                String questionString = "";
                 correctString = "";
-                wrong1String = "";
-                wrong2String = "";
-                wrong3String = "";
+                String wrong1String = "";
+                String wrong2String = "";
+                String wrong3String = "";
 
                 //Bästa sättet jag hittade att slumpa fram en fråga
                 int i = 0;
                 for (DataSnapshot snap : snapshot.getChildren()) { //Uppdaterar fråga tills den når det framslumpade talet, ye det låter dumt men jag google och det var typ det bästa sättet
-                    if(i == randomQuestionIndex) {
+                    if (i == randomQuestionIndex) {
                         questionString = snap.child("questionString").getValue().toString();
                         correctString = snap.child("correctString").getValue().toString();
                         wrong1String = snap.child("wrong1String").getValue().toString();
                         wrong2String = snap.child("wrong2String").getValue().toString();
                         wrong3String = snap.child("wrong3String").getValue().toString();
 
-                        break;
+                        if (questionUsed()) { //Om frågan redan kommit den här ronden (OBS borde ändras till att den kollar om frågan redan kommit den här MATCHEN. Kanske ladda upp använda frågor till databas
+                            //återställ så den slumpar fram nu fråga
+                            i = -1;
+                            randomQuestionIndex = new Random().nextInt(numberOfQuestions);
+                        }
+                        else {
+                            //stoppa loopen och lägg till frågan i list
+                            usedQuestionsList.add(questionString);
+                            break;
+                        }
                     }
                     i++;
                 }
@@ -89,20 +144,26 @@ public class GameplayActivity extends AppCompatActivity {
         });
     }
 
-    public void checkAnswer() {
-        TextView resultText = findViewById(R.id.resultTextView);
-        if (clickedButton.getText().equals(correctString)) {
-            clickedButton.setBackgroundColor(Color.GREEN);
-            resultText.setText("RÄTT!");
-        }
-        else {
-            clickedButton.setBackgroundColor(Color.RED);
-            resultText.setText("FEL!");
-            if (optionButton1.getText().equals(correctString)) optionButton1.setBackgroundColor(Color.GREEN);
-            else if (optionButton2.getText().equals(correctString)) optionButton2.setBackgroundColor(Color.GREEN);
-            else if (optionButton3.getText().equals(correctString)) optionButton3.setBackgroundColor(Color.GREEN);
-            else if (optionButton4.getText().equals(correctString)) optionButton4.setBackgroundColor(Color.GREEN);
-        }
+    public void reset() {
+        questionTextBox.setText("");
+        optionButton1.setText("");
+        optionButton2.setText("");
+        optionButton3.setText("");
+        optionButton4.setText("");
+        resultText.setText("");
+        optionButton1.setTextColor(Color.WHITE);
+        optionButton2.setTextColor(Color.WHITE);
+        optionButton3.setTextColor(Color.WHITE);
+        optionButton4.setTextColor(Color.WHITE);
+        optionButton1.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        optionButton2.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        optionButton3.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        optionButton4.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        optionButton1.setEnabled(true);
+        optionButton2.setEnabled(true);
+        optionButton3.setEnabled(true);
+        optionButton4.setEnabled(true);
+        nextQuestionButton.setVisibility(View.INVISIBLE);
     }
 
     public void onClickOption1Button(View view) {
@@ -123,5 +184,25 @@ public class GameplayActivity extends AppCompatActivity {
     public void onClickOption4Button(View view) {
         clickedButton = findViewById(R.id.optionButton4);
         checkAnswer();
+    }
+
+    public void onClickNextQuestionButton(View view) {
+        if (answeredQuestions < 4) {
+            reset();
+            getNewQuestion();
+        }
+        else {
+            Intent onClickIntent = new Intent(GameplayActivity.this, gamesActivity.class);
+            startActivity(onClickIntent);
+            Toast.makeText(GameplayActivity.this, "Motståndarens tur!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    //Ändra denna så den checkar om frågan anväts i hela matchen i activeGame i databasen
+    public boolean questionUsed() {
+        if (usedQuestionsList.contains(correctString)) {
+            return true;
+        }
+        else return true;
     }
 }

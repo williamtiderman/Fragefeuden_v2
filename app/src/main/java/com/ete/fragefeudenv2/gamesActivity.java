@@ -1,5 +1,6 @@
 package com.ete.fragefeudenv2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -11,9 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,15 +133,27 @@ public class gamesActivity extends AppCompatActivity {
     public void joinGame(View view){
         EditText joinGameID = (EditText) findViewById(R.id.joinGameNumber);
         int gameID = Integer.parseInt(joinGameID.getText().toString());
-        myRef = FirebaseDatabase.getInstance().getReference("activeGames");
-        Query checkGameID = myRef.orderByChild("gameID").equalTo(gameID);
+        /*myRef = FirebaseDatabase.getInstance().getReference("activeGames");
+        Query checkGameID = myRef.orderByChild("gameID").equalTo(gameID);*/
 
+        myRef = FirebaseDatabase.getInstance().getReference().child("activeGames");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int i = 0;
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    if (i == gameID) {
+                        snap.child("playerTwo").getValue(); //skriver till
+                    }
+                    i++;
+                }
+            }
 
-
-
-
-
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void startaSpel0(View view){
