@@ -28,6 +28,7 @@ public class GameplayActivity extends AppCompatActivity {
     DatabaseReference myRef;
     Button clickedButton;
     String correctString;
+    String questionString;
     TextView questionTextBox;
     Button optionButton1;
     Button optionButton2;
@@ -93,7 +94,7 @@ public class GameplayActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int numberOfQuestions = (int) snapshot.getChildrenCount();
                 int randomQuestionIndex = new Random().nextInt(numberOfQuestions);
-                String questionString = "";
+                questionString = "";
                 correctString = "";
                 String wrong1String = "";
                 String wrong2String = "";
@@ -108,17 +109,7 @@ public class GameplayActivity extends AppCompatActivity {
                         wrong1String = snap.child("wrong1String").getValue().toString();
                         wrong2String = snap.child("wrong2String").getValue().toString();
                         wrong3String = snap.child("wrong3String").getValue().toString();
-
-                        if (questionUsed()) { //Om frågan redan kommit den här ronden (OBS borde ändras till att den kollar om frågan redan kommit den här MATCHEN. Kanske ladda upp använda frågor till databas
-                            //återställ så den slumpar fram nu fråga
-                            i = -1;
-                            randomQuestionIndex = new Random().nextInt(numberOfQuestions);
-                        }
-                        else {
-                            //stoppa loopen och lägg till frågan i list
-                            usedQuestionsList.add(questionString);
-                            break;
-                        }
+                        break;
                     }
                     i++;
                 }
@@ -200,7 +191,7 @@ public class GameplayActivity extends AppCompatActivity {
 
     //Ändra denna så den checkar om frågan anväts i hela matchen i activeGame i databasen
     public boolean questionUsed() {
-        if (usedQuestionsList.contains(correctString)) {
+        if (usedQuestionsList.contains(questionString)) {
             return true;
         }
         else return true;
