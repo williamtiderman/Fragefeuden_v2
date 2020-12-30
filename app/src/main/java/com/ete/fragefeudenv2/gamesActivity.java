@@ -83,22 +83,22 @@ public class gamesActivity extends AppCompatActivity {
                 case 0:
                     spelKnapp = (Button) findViewById(R.id.spel0);
                     player.setGame0ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).setValue(player.getGame0ID());
+                    myRef.child(String.valueOf(player.getPlayerName())).child("GameID").setValue(player.getGame0ID());
                     break;
                 case 1:
                     spelKnapp = (Button) findViewById(R.id.spel1);
                     player.setGame1ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).setValue(player.getGame1ID());
+                    myRef.child(String.valueOf(player.getPlayerName())).child("GameID").setValue(player.getGame1ID());
                     break;
                 case 2:
                     spelKnapp = (Button) findViewById(R.id.spel2);
                     player.setGame2ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).setValue(player.getGame2ID());
+                    myRef.child(String.valueOf(player.getPlayerName())).child("GameID").setValue(player.getGame2ID());
                     break;
                 case 3:
                     spelKnapp = (Button) findViewById(R.id.spel3);
                     player.setGame3ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).setValue(player.getGame3ID());
+                    myRef.child(String.valueOf(player.getPlayerName())).child("GameID").setValue(player.getGame3ID());
                     break;
             }
 
