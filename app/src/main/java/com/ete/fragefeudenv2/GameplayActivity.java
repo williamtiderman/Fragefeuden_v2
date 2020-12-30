@@ -114,12 +114,15 @@ public class GameplayActivity extends AppCompatActivity {
                     i++;
                 }
 
+                if (questionUsed()) getNewQuestion();
+
                 ArrayList<String> optionsList = new ArrayList<String>();
                 optionsList.add(correctString);
                 optionsList.add(wrong1String);
                 optionsList.add(wrong2String);
                 optionsList.add(wrong3String);
                 Collections.shuffle(optionsList);
+                usedQuestionsList.add(questionString);
 
                 questionTextBox.setText(questionString);
                 optionButton1.setText(optionsList.get(0));
@@ -136,7 +139,7 @@ public class GameplayActivity extends AppCompatActivity {
     }
 
     public void reset() {
-        questionTextBox.setText("");
+        questionTextBox.setText("Laddar fråga...");
         optionButton1.setText("");
         optionButton2.setText("");
         optionButton3.setText("");

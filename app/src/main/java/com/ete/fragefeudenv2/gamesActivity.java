@@ -133,27 +133,9 @@ public class gamesActivity extends AppCompatActivity {
     public void joinGame(View view){
         EditText joinGameID = (EditText) findViewById(R.id.joinGameNumber);
         int gameID = Integer.parseInt(joinGameID.getText().toString());
-        /*myRef = FirebaseDatabase.getInstance().getReference("activeGames");
-        Query checkGameID = myRef.orderByChild("gameID").equalTo(gameID);*/
-
-        myRef = FirebaseDatabase.getInstance().getReference().child("activeGames");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int i = 0;
-                for (DataSnapshot snap : snapshot.getChildren()) {
-                    if (i == gameID) {
-                        snap.child("playerTwo").getValue(); //skriver till
-                    }
-                    i++;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
-            }
-        });
+        playerTwo = player.getPlayerName();
+        myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
+        myRef.child("playerTwo").setValue(playerTwo);
     }
 
     public void startaSpel0(View view){
