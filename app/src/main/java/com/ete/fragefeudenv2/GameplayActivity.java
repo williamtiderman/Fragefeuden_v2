@@ -37,6 +37,8 @@ public class GameplayActivity extends AppCompatActivity {
     Button nextQuestionButton;
     TextView resultText;
 
+    int q = 0;
+
     ArrayList<String> usedQuestionsList = new ArrayList<String>();
 
     int answeredQuestions = 0;
@@ -114,7 +116,7 @@ public class GameplayActivity extends AppCompatActivity {
                     i++;
                 }
 
-                //if (!questionUsed()) getNewQuestion();
+                //if (questionUsed()) getNewQuestion();
 
                 ArrayList<String> optionsList = new ArrayList<String>();
                 optionsList.add(correctString);
@@ -192,11 +194,13 @@ public class GameplayActivity extends AppCompatActivity {
         }
     }
 
-    //Ändra denna så den checkar om frågan anväts i hela matchen i activeGame i databasen
     public boolean questionUsed() {
-        if (usedQuestionsList.contains(questionString)) {
+        //SKRIV METOD SOM KOLLAR OM FRÅGAN ÄR ANVÄND HÄR
+        if (true) {
             return true;
         }
-        else return true;
+        else {
+            return false;
+        }
     }
 }
