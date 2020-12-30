@@ -92,14 +92,14 @@ public class GameplayActivity extends AppCompatActivity {
     }
 
     public void checkAnswer() {
-        //TextView resultText = findViewById(R.id.resultTextView);
+        TextView resultText = findViewById(R.id.resultTextView);
         if (clickedButton.getText().equals(correctString)) {
             clickedButton.setBackgroundColor(Color.GREEN);
-            //resultText.setText("Rätt!");
+            resultText.setText("RÄTT!");
         }
         else {
             clickedButton.setBackgroundColor(Color.RED);
-            //resultText.setText("Fel!");
+            resultText.setText("FEL!");
             if (optionButton1.getText().equals(correctString)) optionButton1.setBackgroundColor(Color.GREEN);
             else if (optionButton2.getText().equals(correctString)) optionButton2.setBackgroundColor(Color.GREEN);
             else if (optionButton3.getText().equals(correctString)) optionButton3.setBackgroundColor(Color.GREEN);
