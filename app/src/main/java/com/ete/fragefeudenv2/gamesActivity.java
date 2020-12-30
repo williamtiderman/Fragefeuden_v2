@@ -101,26 +101,33 @@ public class gamesActivity extends AppCompatActivity {
 
     //Denna kallas när man fortsätter ett spel som redan är igång
     public void continueGame(View view, int btnClicked){
+        int gameNumber;
+        Intent onClickIntent = new Intent(gamesActivity.this, GameplayActivity.class);
 
+        //Här skickas bara en siffra med till gameplay activity för att indikera vilket spel/knapp man tryckte på
         switch(btnClicked){
             case 0:
-
+                gameNumber = 0;
                 break;
             case 1:
+                gameNumber = 1;
                 break;
             case 2:
+                gameNumber = 2;
                 break;
             case 3:
+                gameNumber = 3;
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + btnClicked);
         }
-
-
+        onClickIntent.putExtra("gameNumber", gameNumber);
+        startActivity(onClickIntent);
     }
 
     public void joinGame(View view){
-
-        EditText joinGameNumber = (EditText) findViewById(R.id.joinGameNumber);
-        int gameNumber = Integer.parseInt(joinGameNumber.getText().toString());
+        EditText joinGameID = (EditText) findViewById(R.id.joinGameNumber);
+        int gameID = Integer.parseInt(joinGameID.getText().toString());
 
 
     }
