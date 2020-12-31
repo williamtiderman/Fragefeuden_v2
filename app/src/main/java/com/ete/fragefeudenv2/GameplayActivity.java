@@ -213,7 +213,7 @@ public class GameplayActivity extends AppCompatActivity {
                         myRef.setValue("playerOnePoints", currentPoints + correctAnswers);
                     }
                     int currentRound = (int) snapshot.child("gameRound").getValue();
-                    myRef.setValue("playerOnePoints", gameround+1);
+                    myRef.setValue("playerOnePoints",gameround + 1);
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
