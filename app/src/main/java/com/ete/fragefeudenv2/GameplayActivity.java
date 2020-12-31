@@ -45,10 +45,13 @@ public class GameplayActivity extends AppCompatActivity {
     int correctAnswers = 0;
     int wrongAnswers = 0;
 
+    int gameID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
+
 
         questionTextBox = findViewById(R.id.questionText);
         optionButton1 = findViewById(R.id.optionButton1);
@@ -57,6 +60,10 @@ public class GameplayActivity extends AppCompatActivity {
         optionButton4 = findViewById(R.id.optionButton4);
         nextQuestionButton = findViewById(R.id.nextQuestionButton);
         resultText = findViewById(R.id.resultTextView);
+
+        String stringGameID = getIntent().getStringExtra("gameNumber");
+
+        gameID = Integer.parseInt(stringGameID);
 
         reset();
         getNewQuestion();
