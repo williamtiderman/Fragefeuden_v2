@@ -190,7 +190,7 @@ public class gamesActivity extends AppCompatActivity {
             default:
                 throw new IllegalStateException("Unexpected value: " + btnClicked);
         }
-        onClickIntent.putExtra("gameNumber", gameNumber);
+        onClickIntent.putExtra(Intent.EXTRA_TEXT, gameNumber);
         startActivity(onClickIntent);
     }
 
