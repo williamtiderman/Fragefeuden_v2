@@ -37,9 +37,7 @@ public class addQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (noEmptyValues()) {
-                    root = FirebaseDatabase.getInstance();
-                    myRef = root.getReference("questions");
-
+                    myRef = FirebaseDatabase.getInstance().getReference("questions");
 
                     questionString = question.getText().toString();
                     correctString = correct.getText().toString();

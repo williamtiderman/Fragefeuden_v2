@@ -80,34 +80,6 @@ public class GameplayActivity extends AppCompatActivity {
             correctAnswers++;
             clickedButton.setBackgroundColor(Color.GREEN);
             resultText.setText("RÄTT!");
-
-            myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameRound);
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-                    if (snapshot.child("Game0ID").exists()) {
-
-                    }
-                    if (snapshot.child("Game1ID").exists()) {
-
-                    }
-                    if (snapshot.child("Game2ID").exists()) {
-
-                    }
-                    if (snapshot.child("Game3ID").exists()) {
-
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
-                }
-            });
-
         }
         else {
             //Om man har fel
@@ -224,6 +196,30 @@ public class GameplayActivity extends AppCompatActivity {
             getNewQuestion();
         }
         else {
+            myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String gameround = snapshot.child("gameRound").toString();
+
+                    if (Integer.parseInt(gameround) % 2 == 0) {
+                        int currentPoints = (int) snapshot.child("playerTwoPoints").getValue();
+
+                        myRef.child("playerTwoPoints").setValue(currentPoints + correctAnswers);
+                    }
+                    else if (Integer.parseInt(gameround) % 2 == 1) {
+                        int currentPoints = (int) snapshot.child("playerOnePoints").getValue();
+
+                        myRef.child("playerOnePoints").setValue(currentPoints + correctAnswers);
+                    }
+                    int currentRound = (int) snapshot.child("gameRound").getValue();
+                    myRef.child("gameRound").setValue(currentRound+1);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(GameplayActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
+                }
+            });
             Intent onClickIntent = new Intent(GameplayActivity.this, gamesActivity.class);
             startActivity(onClickIntent);
         }
