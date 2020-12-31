@@ -200,14 +200,14 @@ public class GameplayActivity extends AppCompatActivity {
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String gameround = snapshot.child("gameRound").toString();
+                    int gameround = (int) snapshot.child("gameRound").getValue();
 
-                    if (Integer.parseInt(gameround) % 2 == 1) {
+                    if ((gameround) % 2 == 1) {
                         int currentPoints = (int) snapshot.child("playerTwoPoints").getValue();
 
                         myRef.setValue("playerTwoPoints", currentPoints + correctAnswers);
                     }
-                    else if (Integer.parseInt(gameround) % 2 == 0) {
+                    else if ((gameround) % 2 == 0) {
                         int currentPoints = (int) snapshot.child("playerOnePoints").getValue();
 
                         myRef.setValue("playerOnePoints", currentPoints + correctAnswers);
