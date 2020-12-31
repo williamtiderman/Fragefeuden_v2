@@ -26,6 +26,7 @@ import java.util.Random;
 public class GameplayActivity extends AppCompatActivity {
 
     DatabaseReference myRef;
+    FirebaseDatabase root;
     Button clickedButton;
     String correctString;
     String questionString;
@@ -72,6 +73,34 @@ public class GameplayActivity extends AppCompatActivity {
             correctAnswers++;
             clickedButton.setBackgroundColor(Color.GREEN);
             resultText.setText("RÄTT!");
+
+            myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameRound);
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                    if (snapshot.child("Game0ID").exists()) {
+
+                    }
+                    if (snapshot.child("Game1ID").exists()) {
+
+                    }
+                    if (snapshot.child("Game2ID").exists()) {
+
+                    }
+                    if (snapshot.child("Game3ID").exists()) {
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
+                }
+            });
+
         }
         else {
             //Om man har fel
