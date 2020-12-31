@@ -202,18 +202,18 @@ public class GameplayActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String gameround = snapshot.child("gameRound").toString();
 
-                    if (Integer.parseInt(gameround) % 2 == 0) {
+                    if (Integer.parseInt(gameround) % 2 == 1) {
                         int currentPoints = (int) snapshot.child("playerTwoPoints").getValue();
 
-                        myRef.child("playerTwoPoints").setValue(currentPoints + correctAnswers);
+                        myRef.setValue("playerTwoPoints", currentPoints + correctAnswers);
                     }
-                    else if (Integer.parseInt(gameround) % 2 == 1) {
+                    else if (Integer.parseInt(gameround) % 2 == 0) {
                         int currentPoints = (int) snapshot.child("playerOnePoints").getValue();
 
-                        myRef.child("playerOnePoints").setValue(currentPoints + correctAnswers);
+                        myRef.setValue("playerOnePoints", currentPoints + correctAnswers);
                     }
                     int currentRound = (int) snapshot.child("gameRound").getValue();
-                    myRef.child("gameRound").setValue(currentRound+1);
+                    myRef.setValue("playerOnePoints", gameround+1);
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {

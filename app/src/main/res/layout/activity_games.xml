@@ -45,9 +45,10 @@
         android:text="@string/join_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spel3"
-        app:layout_constraintVertical_bias=".8" />
+        app:layout_constraintVertical_bias="0.681" />
 
     <Button
         android:id="@+id/startaNytt"
@@ -95,14 +96,21 @@
         android:id="@+id/joinGameNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLength="4"
         android:ems="10"
         android:hint="Spel-ID"
         android:inputType="number"
+        android:maxLength="4"
         app:layout_constraintBottom_toTopOf="@+id/joinGame"
         app:layout_constraintEnd_toEndOf="@+id/joinGame"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/joinGame"
         app:layout_constraintTop_toBottomOf="@+id/spel3"
-        app:layout_constraintVertical_bias=".9" />
+        app:layout_constraintVertical_bias="0.675" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lämna ett spel"
+        tools:layout_editor_absoluteX="124dp"
+        tools:layout_editor_absoluteY="667dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
