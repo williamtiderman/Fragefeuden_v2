@@ -200,7 +200,6 @@ public class GameplayActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     int gameRound = (int) snapshot.child("gameRound").getValue();
-
                     if ((gameRound) % 2 == 1) {
                         int currentPoints = (int) snapshot.child("playerTwoPoints").getValue();
 
