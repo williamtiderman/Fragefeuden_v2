@@ -80,6 +80,7 @@ public class gamesActivity extends AppCompatActivity {
                     spel0Knapp.setVisibility(View.VISIBLE);
                     foundGameID = Integer.parseInt(gameIDString);
                     player.getGameList().add(new Game(foundGameID));
+                    player.setGame0IDAvalible(false);
                 }
                 if (snapshot.child("Game1ID").exists()) {
                     String gameIDString = snapshot.child("Game1ID").getValue().toString();
@@ -87,6 +88,7 @@ public class gamesActivity extends AppCompatActivity {
                     spel1Knapp.setVisibility(View.VISIBLE);
                     foundGameID = Integer.parseInt(gameIDString);
                     player.getGameList().add(new Game(foundGameID));
+                    player.setGame1IDAvalible(false);
                 }
                 if (snapshot.child("Game2ID").exists()) {
                     String gameIDString = snapshot.child("Game2ID").getValue().toString();
@@ -94,6 +96,7 @@ public class gamesActivity extends AppCompatActivity {
                     spel2Knapp.setVisibility(View.VISIBLE);
                     foundGameID = Integer.parseInt(gameIDString);
                     player.getGameList().add(new Game(foundGameID));
+                    player.setGame2IDAvalible(false);
                 }
                 if (snapshot.child("Game3ID").exists()) {
                     String gameIDString = snapshot.child("Game3ID").getValue().toString();
@@ -101,6 +104,7 @@ public class gamesActivity extends AppCompatActivity {
                     spel3Knapp.setVisibility(View.VISIBLE);
                     foundGameID = Integer.parseInt(gameIDString);
                     player.getGameList().add(new Game(foundGameID));
+                    player.setGame3IDAvalible(false);
                 }
                 createNewGameButton.setText("Skapa Nytt Spel");
                 createNewGameButton.setEnabled(true);
@@ -145,27 +149,33 @@ public class gamesActivity extends AppCompatActivity {
 
             spelKnapp = null;
 
-            switch (numOfGames) {
-                case 0:
-                    spelKnapp = (Button) findViewById(R.id.spel0);
-                    player.setGame0ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).child("Game0ID").setValue(player.getGame0ID());
-                    break;
-                case 1:
-                    spelKnapp = (Button) findViewById(R.id.spel1);
-                    player.setGame1ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).child("Game1ID").setValue(player.getGame1ID());
-                    break;
-                case 2:
-                    spelKnapp = (Button) findViewById(R.id.spel2);
-                    player.setGame2ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).child("Game2ID").setValue(player.getGame2ID());
-                    break;
-                case 3:
-                    spelKnapp = (Button) findViewById(R.id.spel3);
-                    player.setGame3ID(int_random);
-                    myRef.child(String.valueOf(player.getPlayerName())).child("Game3ID").setValue(player.getGame3ID());
-                    break;
+            if (player.getGame0IDAvalible()) {
+                spelKnapp = (Button) findViewById(R.id.spel0);
+                player.setGame0ID(int_random);
+                myRef.child(String.valueOf(player.getPlayerName())).child("Game0ID").setValue(player.getGame0ID());
+                player.setGame0IDAvalible(false);
+            }
+            else if (player.getGame1IDAvalible()) {
+                spelKnapp = (Button) findViewById(R.id.spel1);
+                player.setGame1ID(int_random);
+                myRef.child(String.valueOf(player.getPlayerName())).child("Game1ID").setValue(player.getGame1ID());
+                player.setGame1IDAvalible(false);
+            }
+            else if (player.getGame2IDAvalible()) {
+                spelKnapp = (Button) findViewById(R.id.spel2);
+                player.setGame2ID(int_random);
+                myRef.child(String.valueOf(player.getPlayerName())).child("Game2ID").setValue(player.getGame2ID());
+                player.setGame2IDAvalible(false);
+            }
+            else if (player.getGame3IDAvalible()) {
+                spelKnapp = (Button) findViewById(R.id.spel3);
+                player.setGame3ID(int_random);
+                myRef.child(String.valueOf(player.getPlayerName())).child("Game3ID").setValue(player.getGame3ID());
+                player.setGame3IDAvalible(false);
+            }
+            else {
+                Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
+                toast.show();
             }
 
             spelKnapp.setText(String.valueOf(int_random));
@@ -220,27 +230,34 @@ public class gamesActivity extends AppCompatActivity {
                         myRef.child("playerTwo").setValue(playerTwo);
                         player.getGameList().add(new Game(gameID));
                         myRef = FirebaseDatabase.getInstance().getReference().child("players");
-                        switch (numOfGames) {
-                            case 0:
-                                spelKnapp = (Button) findViewById(R.id.spel0);
-                                player.setGame0ID(gameID);
-                                myRef.child(String.valueOf(player.getPlayerName())).child("Game0ID").setValue(player.getGame0ID());
-                                break;
-                            case 1:
-                                spelKnapp = (Button) findViewById(R.id.spel1);
-                                player.setGame1ID(gameID);
-                                myRef.child(String.valueOf(player.getPlayerName())).child("Game1ID").setValue(player.getGame1ID());
-                                break;
-                            case 2:
-                                spelKnapp = (Button) findViewById(R.id.spel2);
-                                player.setGame2ID(gameID);
-                                myRef.child(String.valueOf(player.getPlayerName())).child("Game2ID").setValue(player.getGame2ID());
-                                break;
-                            case 3:
-                                spelKnapp = (Button) findViewById(R.id.spel3);
-                                player.setGame3ID(gameID);
-                                myRef.child(String.valueOf(player.getPlayerName())).child("Game3ID").setValue(player.getGame3ID());
-                                break;
+
+                        if (player.getGame0IDAvalible()) {
+                            spelKnapp = (Button) findViewById(R.id.spel0);
+                            player.setGame0ID(gameID);
+                            myRef.child(String.valueOf(player.getPlayerName())).child("Game0ID").setValue(player.getGame0ID());
+                            player.setGame0IDAvalible(false);
+                        }
+                        else if (player.getGame1IDAvalible()) {
+                            spelKnapp = (Button) findViewById(R.id.spel1);
+                            player.setGame1ID(gameID);
+                            myRef.child(String.valueOf(player.getPlayerName())).child("Game1ID").setValue(player.getGame1ID());
+                            player.setGame1IDAvalible(false);
+                        }
+                        else if (player.getGame2IDAvalible()) {
+                            spelKnapp = (Button) findViewById(R.id.spel2);
+                            player.setGame2ID(gameID);
+                            myRef.child(String.valueOf(player.getPlayerName())).child("Game2ID").setValue(player.getGame2ID());
+                            player.setGame2IDAvalible(false);
+                        }
+                        else if (player.getGame3IDAvalible()) {
+                            spelKnapp = (Button) findViewById(R.id.spel3);
+                            player.setGame3ID(gameID);
+                            myRef.child(String.valueOf(player.getPlayerName())).child("Game3ID").setValue(player.getGame3ID());
+                            player.setGame3IDAvalible(false);
+                        }
+                        else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
+                            toast.show();
                         }
 
                         spelKnapp.setText(String.valueOf(gameID));
