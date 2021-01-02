@@ -106,7 +106,7 @@ public class gamesActivity extends AppCompatActivity {
 
 
                     if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("")){
-                        spel0Knapp.setText(gameIDString);
+                        spel0Knapp.setText("Spel-ID: " + gameIDString);
                     }
                     else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
                         spel0Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString());
@@ -151,7 +151,7 @@ public class gamesActivity extends AppCompatActivity {
                     }
 
                     if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("")){
-                        spel1Knapp.setText(gameIDString);
+                        spel1Knapp.setText("Spel-ID: " + gameIDString);
                     }
                     else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
                         spel1Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString());
@@ -194,7 +194,7 @@ public class gamesActivity extends AppCompatActivity {
                     }
 
                     if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("")){
-                        spel2Knapp.setText(gameIDString);
+                        spel2Knapp.setText("Spel-ID: " + gameIDString);
                     }
                     else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
                         spel2Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString());
@@ -238,7 +238,7 @@ public class gamesActivity extends AppCompatActivity {
                     }
 
                     if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("")){
-                        spel3Knapp.setText(gameIDString);
+                        spel3Knapp.setText("Spel-ID: " + gameIDString);
                     }
                     else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
                         spel3Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString());
@@ -436,15 +436,15 @@ public class gamesActivity extends AppCompatActivity {
             spel1Knapp.setBackgroundColor(Color.RED);
             spel2Knapp.setBackgroundColor(Color.RED);
             spel3Knapp.setBackgroundColor(Color.RED);
+            spel0Knapp.setEnabled(true);
+            spel1Knapp.setEnabled(true);
+            spel2Knapp.setEnabled(true);
+            spel3Knapp.setEnabled(true);
 
         }
         else { //Avbryt lämna spel läge genom att trycka på knappen igen
-            leavingGame = false;
-            leaveGameButton.setText("Lämna Ett Spel");
-            spel0Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
-            spel1Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
-            spel2Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
-            spel3Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+            finish();
+            startActivity(getIntent());
         }
     }
 
@@ -510,15 +510,29 @@ public class gamesActivity extends AppCompatActivity {
                 throw new IllegalStateException("Unexpected value: " + btnClicked);
         }
 
-        myRef = FirebaseDatabase.getInstance().getReference().child(playerName);
+        myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber));
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String playerTwo = snapshot.child("playerTwo").getValue().toString();
+                String playerOne = snapshot.child("playerOne").getValue().toString();
+
                 myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber));
                 myRef.removeValue();
 
                 myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName).child(currentGame);
                 myRef.setValue(null);
+
+                if(snapshot.child("playerOne").getValue().toString().equals(playerName)){
+                    myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerTwo).child(currentGame);
+                }
+                else{
+                    myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerOne).child(currentGame);
+                }
+                myRef.setValue(null);
+
+                finish();
+                startActivity(getIntent());
             }
 
             @Override
@@ -526,7 +540,6 @@ public class gamesActivity extends AppCompatActivity {
                 Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     @Override

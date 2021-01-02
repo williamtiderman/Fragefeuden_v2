@@ -9,6 +9,7 @@
 
     <Button
         android:id="@+id/spel3"
+        android:autoSizeTextType="uniform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="20dp"
@@ -24,6 +25,7 @@
 
     <Button
         android:id="@+id/spel2"
+        android:autoSizeTextType="uniform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="20dp"
@@ -64,6 +66,7 @@
 
     <Button
         android:id="@+id/spel0"
+        android:autoSizeTextType="uniform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="20dp"
@@ -79,6 +82,7 @@
 
     <Button
         android:id="@+id/spel1"
+        android:autoSizeTextType="uniform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="20dp"
@@ -108,6 +112,7 @@
 
     <Button
         android:id="@+id/leaveGameButton"
+        android:autoSizeTextType="uniform"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickLeaveGame"
