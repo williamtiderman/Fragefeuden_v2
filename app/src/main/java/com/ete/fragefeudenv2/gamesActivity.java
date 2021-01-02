@@ -31,6 +31,7 @@ public class gamesActivity extends AppCompatActivity {
     private List<Game> gameList = new ArrayList<>();
     Player player;
     DatabaseReference myRef;
+    DatabaseReference mySecondRef;
     FirebaseDatabase root;
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
     private String playerOne, playerTwo;
@@ -71,14 +72,43 @@ public class gamesActivity extends AppCompatActivity {
 
         //Hämtar spelarens aktiva spel från databasen
 
-        myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName);
+        myRef = FirebaseDatabase.getInstance().getReference();
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 player = new Player(playerName);
 
-                if (snapshot.child("Game0ID").exists()) {
-                    String gameIDString = snapshot.child("Game0ID").getValue().toString();
+                if (snapshot.child("players").child(playerName).child("Game0ID").exists()) {
+
+
+
+                    String gameIDString = snapshot.child("players").child(playerName).child("Game0ID").getValue().toString();
+
+
+                    boolean playerOne;
+                    int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
+                    if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
+                        playerOne = true;
+                    }
+                    else{
+                        playerOne = false;
+                    }
+
+                    if(gameRoundsCheck % 2 == 1 && playerOne == false){
+                        spel0Knapp.setEnabled(true);
+                    }
+                    else if(gameRoundsCheck % 2 == 1 && playerOne == true){
+                        spel0Knapp.setEnabled(false);
+                    }
+                    else if(gameRoundsCheck % 2 == 0 && playerOne == false){
+                        spel0Knapp.setEnabled(false);
+                    }
+                    else if(gameRoundsCheck % 2 == 0 && playerOne == true){
+                        spel0Knapp.setEnabled(true);
+                    }
+
+
                     spel0Knapp.setText(gameIDString);
                     spel0Knapp.setVisibility(View.VISIBLE);
                     foundGameID = Integer.parseInt(gameIDString);
@@ -86,8 +116,30 @@ public class gamesActivity extends AppCompatActivity {
                     player.setGame0IDAvalible(false);
                     player.setGame0ID(foundGameID);
                 }
-                if (snapshot.child("Game1ID").exists()) {
-                    String gameIDString = snapshot.child("Game1ID").getValue().toString();
+                if (snapshot.child("players").child(playerName).child("Game1ID").exists()) {
+                    String gameIDString = snapshot.child("players").child(playerName).child("Game1ID").getValue().toString();
+                    boolean playerOne;
+                    int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
+                    if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
+                        playerOne = true;
+                    }
+                    else{
+                        playerOne = false;
+                    }
+
+                    if(gameRoundsCheck % 2 == 1 && playerOne == false){
+                        spel0Knapp.setEnabled(true);
+                    }
+                    else if(gameRoundsCheck % 2 == 1 && playerOne == true){
+                        spel0Knapp.setEnabled(false);
+                    }
+                    else if(gameRoundsCheck % 2 == 0 && playerOne == false){
+                        spel0Knapp.setEnabled(false);
+                    }
+                    else if(gameRoundsCheck % 2 == 0 && playerOne == true){
+                        spel0Knapp.setEnabled(true);
+                    }
+
                     spel1Knapp.setText(gameIDString);
                     spel1Knapp.setVisibility(View.VISIBLE);
                     foundGameID = Integer.parseInt(gameIDString);
@@ -95,8 +147,30 @@ public class gamesActivity extends AppCompatActivity {
                     player.setGame1IDAvalible(false);
                     player.setGame1ID(foundGameID);
                 }
-                if (snapshot.child("Game2ID").exists()) {
-                    String gameIDString = snapshot.child("Game2ID").getValue().toString();
+                if (snapshot.child("players").child(playerName).child("Game2ID").exists()) {
+                    String gameIDString = snapshot.child("players").child(playerName).child("Game2ID").getValue().toString();
+                    boolean playerOne;
+                    int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
+                    if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
+                        playerOne = true;
+                    }
+                    else{
+                        playerOne = false;
+                    }
+
+                    if(gameRoundsCheck % 2 == 1 && playerOne == false){
+                        spel0Knapp.setEnabled(true);
+                    }
+                    else if(gameRoundsCheck % 2 == 1 && playerOne == true){
+                        spel0Knapp.setEnabled(false);
+                    }
+                    else if(gameRoundsCheck % 2 == 0 && playerOne == false){
+                        spel0Knapp.setEnabled(false);
+                    }
+                    else if(gameRoundsCheck % 2 == 0 && playerOne == true){
+                        spel0Knapp.setEnabled(true);
+                    }
+
                     spel2Knapp.setText(gameIDString);
                     spel2Knapp.setVisibility(View.VISIBLE);
                     foundGameID = Integer.parseInt(gameIDString);
@@ -104,8 +178,30 @@ public class gamesActivity extends AppCompatActivity {
                     player.setGame2IDAvalible(false);
                     player.setGame2ID(foundGameID);
                 }
-                if (snapshot.child("Game3ID").exists()) {
-                    String gameIDString = snapshot.child("Game3ID").getValue().toString();
+                if (snapshot.child("players").child(playerName).child("Game3ID").exists()) {
+                    String gameIDString = snapshot.child("players").child(playerName).child("Game3ID").getValue().toString();
+
+                    boolean playerOne;
+                    int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
+                    if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
+                        playerOne = true;
+                    }
+                    else{
+                        playerOne = false;
+                    }
+
+                    if(gameRoundsCheck % 2 == 1 && playerOne == false){
+                        spel0Knapp.setEnabled(true);
+                    }
+                    else if(gameRoundsCheck % 2 == 1 && playerOne == true){
+                        spel0Knapp.setEnabled(false);
+                    }
+                    else if(gameRoundsCheck % 2 == 0 && playerOne == false){
+                        spel0Knapp.setEnabled(false);
+                    }
+                    else if(gameRoundsCheck % 2 == 0 && playerOne == true){
+                        spel0Knapp.setEnabled(true);
+                    }
                     spel3Knapp.setText(gameIDString);
                     spel3Knapp.setVisibility(View.VISIBLE);
                     foundGameID = Integer.parseInt(gameIDString);
