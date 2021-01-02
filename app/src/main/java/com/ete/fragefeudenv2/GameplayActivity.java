@@ -66,6 +66,8 @@ public class GameplayActivity extends AppCompatActivity {
 
         gameID = Integer.parseInt(stringGameID);
 
+        Toast.makeText(GameplayActivity.this, String.valueOf(gameID), Toast.LENGTH_LONG).show();
+
         reset();
         getNewQuestion();
     }

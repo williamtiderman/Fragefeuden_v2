@@ -81,6 +81,7 @@ public class gamesActivity extends AppCompatActivity {
                     foundGameID = Integer.parseInt(gameIDString);
                     player.getGameList().add(new Game(foundGameID));
                     player.setGame0IDAvalible(false);
+                    player.setGame0ID(foundGameID);
                 }
                 if (snapshot.child("Game1ID").exists()) {
                     String gameIDString = snapshot.child("Game1ID").getValue().toString();
@@ -89,6 +90,7 @@ public class gamesActivity extends AppCompatActivity {
                     foundGameID = Integer.parseInt(gameIDString);
                     player.getGameList().add(new Game(foundGameID));
                     player.setGame1IDAvalible(false);
+                    player.setGame1ID(foundGameID);
                 }
                 if (snapshot.child("Game2ID").exists()) {
                     String gameIDString = snapshot.child("Game2ID").getValue().toString();
@@ -97,6 +99,7 @@ public class gamesActivity extends AppCompatActivity {
                     foundGameID = Integer.parseInt(gameIDString);
                     player.getGameList().add(new Game(foundGameID));
                     player.setGame2IDAvalible(false);
+                    player.setGame2ID(foundGameID);
                 }
                 if (snapshot.child("Game3ID").exists()) {
                     String gameIDString = snapshot.child("Game3ID").getValue().toString();
@@ -105,6 +108,7 @@ public class gamesActivity extends AppCompatActivity {
                     foundGameID = Integer.parseInt(gameIDString);
                     player.getGameList().add(new Game(foundGameID));
                     player.setGame3IDAvalible(false);
+                    player.setGame3ID(foundGameID);
                 }
                 createNewGameButton.setText("Skapa Nytt Spel");
                 createNewGameButton.setEnabled(true);
@@ -209,6 +213,7 @@ public class gamesActivity extends AppCompatActivity {
                 throw new IllegalStateException("Unexpected value: " + btnClicked);
         }
         String stringGameNumber = String.valueOf(gameNumber);
+
         onClickIntent.putExtra(Intent.EXTRA_TEXT, stringGameNumber);
         startActivity(onClickIntent);
     }
