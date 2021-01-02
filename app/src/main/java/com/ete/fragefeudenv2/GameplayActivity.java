@@ -200,21 +200,23 @@ public class GameplayActivity extends AppCompatActivity {
             getNewQuestion();
         }
         else {
+
             myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(String.valueOf(gameID));
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                     int gameRounds = Integer.parseInt(snapshot.child("gameRound").getValue().toString());
-                        if(gameRounds % 2 == 0) {
-                            int currentPoints = Integer.parseInt(snapshot.child("playerTwoPoints").getValue().toString());
-                            myRef.child("playerTwoPoints").setValue(correctAnswers + currentPoints);
-                            myRef.child("gameRound").setValue(1 + gameRounds);
-                        }
-                        else if(gameRounds % 2 == 1){
-                            int currentPoints = Integer.parseInt(snapshot.child("playerOnePoints").getValue().toString());
-                            myRef.child("playerOnePoints").setValue(correctAnswers + currentPoints);
-                            myRef.child("gameRound").setValue(1 + gameRounds);
-                        }
+                    if(gameRounds % 2 == 1) {
+                        int currentPoints = Integer.parseInt(snapshot.child("playerTwoPoints").getValue().toString());
+                        myRef.child("playerTwoPoints").setValue(correctAnswers + currentPoints);
+                        myRef.child("gameRound").setValue(1 + gameRounds);
+                    }
+                    else if(gameRounds % 2 == 0){
+                        int currentPoints = Integer.parseInt(snapshot.child("playerOnePoints").getValue().toString());
+                        myRef.child("playerOnePoints").setValue(correctAnswers + currentPoints);
+                        myRef.child("gameRound").setValue(1 + gameRounds);
+                    }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
