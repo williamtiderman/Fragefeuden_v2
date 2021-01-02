@@ -196,24 +196,24 @@ public class GameplayActivity extends AppCompatActivity {
             getNewQuestion();
         }
         else {
-            myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
+            myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(String.valueOf(gameID));
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    int gameround = (int) snapshot.child("gameRound").getValue();
+                    int gameRound = (int) snapshot.child("gameRound").getValue();
 
-                    if ((gameround) % 2 == 1) {
+                    if ((gameRound) % 2 == 1) {
                         int currentPoints = (int) snapshot.child("playerTwoPoints").getValue();
 
                         myRef.setValue("playerTwoPoints", currentPoints + correctAnswers);
                     }
-                    else if ((gameround) % 2 == 0) {
+                    else if ((gameRound) % 2 == 0) {
                         int currentPoints = (int) snapshot.child("playerOnePoints").getValue();
 
                         myRef.setValue("playerOnePoints", currentPoints + correctAnswers);
                     }
                     int currentRound = (int) snapshot.child("gameRound").getValue();
-                    myRef.setValue("playerOnePoints",gameround + 1);
+                    myRef.setValue("playerOnePoints",currentRound + 1);
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
