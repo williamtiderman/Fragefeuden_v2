@@ -52,7 +52,7 @@ public class gamesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_games);
 
         Intent intent = getIntent();
-        playerName = intent.getStringExtra(Intent.EXTRA_TEXT);
+        playerName = intent.getStringExtra("playerName");
 
         //Här ska det kollas med databasen om det finns en spelare med det namnet
 
