@@ -128,16 +128,16 @@ public class gamesActivity extends AppCompatActivity {
                     }
 
                     if(gameRoundsCheck % 2 == 1 && playerOne == false){
-                        spel0Knapp.setEnabled(true);
+                        spel1Knapp.setEnabled(true);
                     }
                     else if(gameRoundsCheck % 2 == 1 && playerOne == true){
-                        spel0Knapp.setEnabled(false);
+                        spel1Knapp.setEnabled(false);
                     }
                     else if(gameRoundsCheck % 2 == 0 && playerOne == false){
-                        spel0Knapp.setEnabled(false);
+                        spel1Knapp.setEnabled(false);
                     }
                     else if(gameRoundsCheck % 2 == 0 && playerOne == true){
-                        spel0Knapp.setEnabled(true);
+                        spel1Knapp.setEnabled(true);
                     }
 
                     spel1Knapp.setText(gameIDString);
@@ -159,16 +159,16 @@ public class gamesActivity extends AppCompatActivity {
                     }
 
                     if(gameRoundsCheck % 2 == 1 && playerOne == false){
-                        spel0Knapp.setEnabled(true);
+                        spel2Knapp.setEnabled(true);
                     }
                     else if(gameRoundsCheck % 2 == 1 && playerOne == true){
-                        spel0Knapp.setEnabled(false);
+                        spel2Knapp.setEnabled(false);
                     }
                     else if(gameRoundsCheck % 2 == 0 && playerOne == false){
-                        spel0Knapp.setEnabled(false);
+                        spel2Knapp.setEnabled(false);
                     }
                     else if(gameRoundsCheck % 2 == 0 && playerOne == true){
-                        spel0Knapp.setEnabled(true);
+                        spel2Knapp.setEnabled(true);
                     }
 
                     spel2Knapp.setText(gameIDString);
@@ -191,16 +191,16 @@ public class gamesActivity extends AppCompatActivity {
                     }
 
                     if(gameRoundsCheck % 2 == 1 && playerOne == false){
-                        spel0Knapp.setEnabled(true);
+                        spel3Knapp.setEnabled(true);
                     }
                     else if(gameRoundsCheck % 2 == 1 && playerOne == true){
-                        spel0Knapp.setEnabled(false);
+                        spel3Knapp.setEnabled(false);
                     }
                     else if(gameRoundsCheck % 2 == 0 && playerOne == false){
-                        spel0Knapp.setEnabled(false);
+                        spel3Knapp.setEnabled(false);
                     }
                     else if(gameRoundsCheck % 2 == 0 && playerOne == true){
-                        spel0Knapp.setEnabled(true);
+                        spel3Knapp.setEnabled(true);
                     }
                     spel3Knapp.setText(gameIDString);
                     spel3Knapp.setVisibility(View.VISIBLE);
