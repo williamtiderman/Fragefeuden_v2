@@ -68,8 +68,6 @@ public class gamesActivity extends AppCompatActivity {
         joinGameButton.setEnabled(false);
         createNewGameButton.setText("Laddar Aktiva Spel...");
 
-        Toast.makeText(gamesActivity.this, playerName, Toast.LENGTH_LONG).show();
-
         //Hämtar spelarens aktiva spel från databasen
 
         myRef = FirebaseDatabase.getInstance().getReference();
