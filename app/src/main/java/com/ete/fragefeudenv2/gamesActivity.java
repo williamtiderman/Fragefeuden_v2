@@ -49,9 +49,7 @@ public class gamesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_games);
 
-        Intent intent = getIntent();
-
-        String playerName = "William";
+        String playerName = getIntent().getStringExtra("playerName");
 
         //Här ska det kollas med databasen om det finns en spelare med det namnet
 
@@ -217,7 +215,8 @@ public class gamesActivity extends AppCompatActivity {
         }
         String stringGameNumber = String.valueOf(gameNumber);
 
-        onClickIntent.putExtra(Intent.EXTRA_TEXT, stringGameNumber);
+        onClickIntent.putExtra("playerName", player.getPlayerName());
+        onClickIntent.putExtra("gameID", stringGameNumber);
         startActivity(onClickIntent);
     }
 
