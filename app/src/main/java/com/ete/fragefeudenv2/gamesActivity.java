@@ -80,7 +80,19 @@ public class gamesActivity extends AppCompatActivity {
 
                 if (snapshot.child("Game0ID").exists()) {
                     String gameIDString = snapshot.child("Game0ID").getValue().toString();
-                    spel0Knapp.setText(gameIDString);
+
+                    if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("")){
+                        spel0Knapp.setText(gameIDString);
+                    }
+                    else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
+                        spel0Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString());
+                    }
+                    else{
+                        spel0Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString());
+                    }
+
+
+
                     spel0Knapp.setVisibility(View.VISIBLE);
                     foundGameID = Integer.parseInt(gameIDString);
                     player.getGameList().add(new Game(foundGameID));
@@ -89,7 +101,16 @@ public class gamesActivity extends AppCompatActivity {
                 }
                 if (snapshot.child("Game1ID").exists()) {
                     String gameIDString = snapshot.child("Game1ID").getValue().toString();
-                    spel1Knapp.setText(gameIDString);
+                    if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("")){
+                        spel1Knapp.setText(gameIDString);
+                    }
+                    else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
+                        spel1Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString());
+                    }
+                    else{
+                        spel1Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString());
+                    }
+
                     spel1Knapp.setVisibility(View.VISIBLE);
                     foundGameID = Integer.parseInt(gameIDString);
                     player.getGameList().add(new Game(foundGameID));
@@ -218,7 +239,8 @@ public class gamesActivity extends AppCompatActivity {
         }
         String stringGameNumber = String.valueOf(gameNumber);
 
-        onClickIntent.putExtra(Intent.EXTRA_TEXT, stringGameNumber);
+        onClickIntent.putExtra("gameID", stringGameNumber);
+        onClickIntent.putExtra("playerName", stringGameNumber);
         startActivity(onClickIntent);
     }
 

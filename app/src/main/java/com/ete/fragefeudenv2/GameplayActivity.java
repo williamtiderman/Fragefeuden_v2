@@ -43,6 +43,8 @@ public class GameplayActivity extends AppCompatActivity {
     int correctAnswers = 0;
     int wrongAnswers = 0;
 
+    String playerName;
+
     int gameID;
 
     @Override
@@ -59,7 +61,8 @@ public class GameplayActivity extends AppCompatActivity {
         nextQuestionButton = findViewById(R.id.nextQuestionButton);
         resultText = findViewById(R.id.resultTextView);
 
-        String stringGameID = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        String stringGameID = getIntent().getStringExtra("gameID");
+        String playerName = getIntent().getStringExtra("playerName");
 
         gameID = Integer.parseInt(stringGameID);
 
@@ -219,6 +222,7 @@ public class GameplayActivity extends AppCompatActivity {
                 }
             });
             Intent onClickIntent = new Intent(GameplayActivity.this, gamesActivity.class);
+            onClickIntent.putExtra("playerName", playerName);
             startActivity(onClickIntent);
         }
     }

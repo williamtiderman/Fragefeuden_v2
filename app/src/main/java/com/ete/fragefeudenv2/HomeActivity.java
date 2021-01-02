@@ -24,7 +24,7 @@ public class HomeActivity extends AppCompatActivity {
         String playerName = playerView.getText().toString();
 
         Intent onClickIntent = new Intent(HomeActivity.this, gamesActivity.class);
-        onClickIntent.putExtra(Intent.EXTRA_TEXT, playerName);
+        onClickIntent.putExtra("playerName", playerName);
 
         startActivity(onClickIntent);
     }
