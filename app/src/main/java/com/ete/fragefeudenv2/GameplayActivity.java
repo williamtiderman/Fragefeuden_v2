@@ -62,7 +62,7 @@ public class GameplayActivity extends AppCompatActivity {
         resultText = findViewById(R.id.resultTextView);
 
         String stringGameID = getIntent().getStringExtra("gameID");
-        String playerName = getIntent().getStringExtra("playerName");
+        playerName = getIntent().getStringExtra("playerName");
 
         gameID = Integer.parseInt(stringGameID);
 
