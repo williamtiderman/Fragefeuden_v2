@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -34,8 +35,14 @@ public class gamesActivity extends AppCompatActivity {
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
     private String playerOne, playerTwo;
     private Button spelKnapp;
+    private Button leaveGameButton;
     private boolean gameExists;
+    private boolean leavingGame = false;
     private int foundGameID;
+    private Button spel0Knapp;
+    private Button spel1Knapp;
+    private Button spel2Knapp;
+    private Button spel3Knapp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +55,13 @@ public class gamesActivity extends AppCompatActivity {
 
         //Här ska det kollas med databasen om det finns en spelare med det namnet
 
-        Button spel0Knapp = findViewById(R.id.spel0);
-        Button spel1Knapp = findViewById(R.id.spel1);
-        Button spel2Knapp = findViewById(R.id.spel2);
-        Button spel3Knapp = findViewById(R.id.spel3);
+        spel0Knapp = findViewById(R.id.spel0);
+        spel1Knapp = findViewById(R.id.spel1);
+        spel2Knapp = findViewById(R.id.spel2);
+        spel3Knapp = findViewById(R.id.spel3);
         Button createNewGameButton = findViewById(R.id.startaNytt);
         Button joinGameButton = findViewById(R.id.joinGame);
+        leaveGameButton = findViewById(R.id.leaveGameButton);
 
         createNewGameButton.setEnabled(false);
         joinGameButton.setEnabled(false);
@@ -253,20 +261,74 @@ public class gamesActivity extends AppCompatActivity {
         }
     }
 
+    public void onClickLeaveGame(View view) {
+        if (!leavingGame) { //Starta lämna-spel-läge när man trycker på knappen
+            leavingGame = true;
+            leaveGameButton.setText("Avbryt Lämna Spel");
+            spel0Knapp.setBackgroundColor(Color.RED);
+            spel1Knapp.setBackgroundColor(Color.RED);
+            spel2Knapp.setBackgroundColor(Color.RED);
+            spel3Knapp.setBackgroundColor(Color.RED);
+
+        }
+        else { //Avbryt lämna spel läge genom att trycka på knappen igen
+            leavingGame = false;
+            leaveGameButton.setText("Lämna Ett Spel");
+            spel0Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+            spel1Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+            spel2Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+            spel3Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        }
+    }
+
     public void startaSpel0(View view) {
-        continueGame(view, 0);
+        if (!leavingGame) continueGame(view, 0);
+        else leaveGame(view, 0);
     }
 
     public void startaSpel1(View view) {
-        continueGame(view, 1);
+        if (!leavingGame) continueGame(view, 1);
+        else leaveGame(view, 1);
     }
 
     public void startaSpel2(View view) {
-        continueGame(view, 2);
+        if (!leavingGame) continueGame(view, 2);
+        else leaveGame(view, 2);
     }
 
     public void startaSpel3(View view) {
-        continueGame(view, 3);
+        if (!leavingGame) continueGame(view, 3);
+        else leaveGame(view, 3);
+    }
+
+    private void leaveGame(View view, int btnClicked) {
+        leavingGame = false;
+        leaveGameButton.setText("Lämna Ett Spel");
+        spel0Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        spel1Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        spel2Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        spel3Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        int gameNumber;
+
+        switch (btnClicked) {
+            case 0:
+                gameNumber = player.getGame0ID();
+                break;
+            case 1:
+                gameNumber = player.getGame1ID();
+                break;
+            case 2:
+                gameNumber = player.getGame2ID();
+                break;
+            case 3:
+                gameNumber = player.getGame3ID();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + btnClicked);
+        }
+
+        //TODO Delete activeGame from database, Player class and activity screen where gameID == gameNumber
+
     }
 
     @Override
