@@ -11,10 +11,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.Random;
 public class GameplayActivity extends AppCompatActivity {
 
     DatabaseReference myRef;
+    FirebaseDatabase root;
     Button clickedButton;
     String correctString;
     String questionString;
@@ -42,6 +45,7 @@ public class GameplayActivity extends AppCompatActivity {
     int answeredQuestions = 0;
     int correctAnswers = 0;
     int wrongAnswers = 0;
+    String playerName;
 
     int gameID;
 
@@ -59,7 +63,8 @@ public class GameplayActivity extends AppCompatActivity {
         nextQuestionButton = findViewById(R.id.nextQuestionButton);
         resultText = findViewById(R.id.resultTextView);
 
-        String stringGameID = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        String stringGameID = getIntent().getStringExtra("gameID");
+        playerName = getIntent().getStringExtra("playerName");
 
         gameID = Integer.parseInt(stringGameID);
 
@@ -195,23 +200,21 @@ public class GameplayActivity extends AppCompatActivity {
             getNewQuestion();
         }
         else {
-            myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
-            myRef.addValueEventListener(new ValueEventListener() {
+            myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(String.valueOf(gameID));
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    int gameRound = (int) snapshot.child("gameRound").getValue();
-                    if ((gameRound) % 2 == 1) {
-                        int currentPoints = (int) snapshot.child("playerTwoPoints").getValue();
-
-                        myRef.setValue("playerTwoPoints", currentPoints + correctAnswers);
-                    }
-                    else if ((gameRound) % 2 == 0) {
-                        int currentPoints = (int) snapshot.child("playerOnePoints").getValue();
-
-                        myRef.setValue("playerOnePoints", currentPoints + correctAnswers);
-                    }
-                    int currentRound = (int) snapshot.child("gameRound").getValue();
-                    myRef.setValue("playerOnePoints",currentRound + 1);
+                    int gameRounds = Integer.parseInt(snapshot.child("gameRound").getValue().toString());
+                        if(gameRounds % 2 == 0) {
+                            int currentPoints = Integer.parseInt(snapshot.child("playerTwoPoints").getValue().toString());
+                            myRef.child("playerTwoPoints").setValue(correctAnswers + currentPoints);
+                            myRef.child("gameRound").setValue(1 + gameRounds);
+                        }
+                        else if(gameRounds % 2 == 1){
+                            int currentPoints = Integer.parseInt(snapshot.child("playerOnePoints").getValue().toString());
+                            myRef.child("playerOnePoints").setValue(correctAnswers + currentPoints);
+                            myRef.child("gameRound").setValue(1 + gameRounds);
+                        }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -219,6 +222,7 @@ public class GameplayActivity extends AppCompatActivity {
                 }
             });
             Intent onClickIntent = new Intent(GameplayActivity.this, gamesActivity.class);
+            onClickIntent.putExtra("playerName", playerName);
             startActivity(onClickIntent);
         }
     }

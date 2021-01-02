@@ -32,8 +32,6 @@ public class gamesActivity extends AppCompatActivity {
     Player player;
     DatabaseReference myRef;
     FirebaseDatabase root;
-    String playerName;
-    String currentGame;
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
     private String playerOne, playerTwo;
     private Button spelKnapp;
@@ -52,7 +50,8 @@ public class gamesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_games);
 
         Intent intent = getIntent();
-        playerName = intent.getStringExtra(Intent.EXTRA_TEXT);
+
+        String playerName = intent.getStringExtra(Intent.EXTRA_TEXT);
 
         //Här ska det kollas med databasen om det finns en spelare med det namnet
 
@@ -335,57 +334,43 @@ public class gamesActivity extends AppCompatActivity {
         spel1Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
         spel2Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
         spel3Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        int numOfGames = player.getGameList().size();
         int gameNumber;
 
         switch (btnClicked) {
             case 0:
                 gameNumber = player.getGame0ID();
-                player.setGame0IDAvalible(true);
+                player.setGame0IDAvalible(false);
                 spel0Knapp.setVisibility(View.INVISIBLE);
-                player.getGameList().remove(indexOfEqualGameID(gameNumber));
-                currentGame = "Game0ID";
+                /*gameList.remove();
+                player.getGameList().remove();*/
                 break;
             case 1:
                 gameNumber = player.getGame1ID();
-                player.setGame1IDAvalible(true);
+                player.setGame1IDAvalible(false);
                 spel1Knapp.setVisibility(View.INVISIBLE);
-                player.getGameList().remove(indexOfEqualGameID(gameNumber));
-                currentGame = "Game1ID";
+                /*gameList.remove();
+                player.getGameList().remove();*/
                 break;
             case 2:
                 gameNumber = player.getGame2ID();
-                player.setGame2IDAvalible(true);
-                spel2Knapp.setVisibility(View.INVISIBLE);;
-                player.getGameList().remove(indexOfEqualGameID(gameNumber));
-                currentGame = "Game2ID";
+                player.setGame2IDAvalible(false);
+                spel2Knapp.setVisibility(View.INVISIBLE);
+                /*gameList.remove();
+                player.getGameList().remove();*/
                 break;
             case 3:
                 gameNumber = player.getGame3ID();
-                player.setGame3IDAvalible(true);
+                player.setGame3IDAvalible(false);
                 spel3Knapp.setVisibility(View.INVISIBLE);
-                player.getGameList().remove(indexOfEqualGameID(gameNumber));
-                currentGame = "Game3ID";
+                /*gameList.remove();
+                player.getGameList().remove();*/
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + btnClicked);
         }
 
-        myRef = FirebaseDatabase.getInstance().getReference().child(playerName);
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber));
-                myRef.removeValue();
-
-                myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName).child(currentGame);
-                myRef.setValue(null);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
-            }
-        });
+        //TODO Delete activeGame from database & player class where gameID == gameNumber
 
     }
 
@@ -393,16 +378,5 @@ public class gamesActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent onBackIntent = new Intent(gamesActivity.this, HomeActivity.class);
         startActivity(onBackIntent);
-    }
-
-    public int indexOfEqualGameID(int gameNumber) {
-        if (gameNumber == player.getGameList().get(0).getGame_ID()) return 0;
-        else if (gameNumber == player.getGameList().get(1).getGame_ID()) return 1;
-        else if (gameNumber == player.getGameList().get(2).getGame_ID()) return 2;
-        else if (gameNumber == player.getGameList().get(3).getGame_ID()) return 3;
-        else {
-            Toast.makeText(gamesActivity.this, "oopsie poopie", Toast.LENGTH_SHORT).show();
-            return 0;
-        }
     }
 }
