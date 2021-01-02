@@ -68,7 +68,8 @@ public class gamesActivity extends AppCompatActivity {
         createNewGameButton.setText("Laddar Aktiva Spel...");
 
         //Hämtar spelarens aktiva spel från databasen
-        myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName);
+
+        myRef = FirebaseDatabase.getInstance().getReference().child("players").child("William");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -224,6 +225,7 @@ public class gamesActivity extends AppCompatActivity {
             EditText joinGameID = (EditText) findViewById(R.id.joinGameNumber);
             String inputID = joinGameID.getText().toString();
             int gameID = Integer.parseInt(inputID);
+            joinGameID.setText("");
             playerTwo = player.getPlayerName();
             gameExists = false;
 
@@ -330,26 +332,43 @@ public class gamesActivity extends AppCompatActivity {
         spel1Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
         spel2Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
         spel3Knapp.setBackgroundColor(getResources().getColor(R.color.orange_700));
+        int numOfGames = player.getGameList().size();
         int gameNumber;
 
         switch (btnClicked) {
             case 0:
                 gameNumber = player.getGame0ID();
+                player.setGame0IDAvalible(false);
+                spel0Knapp.setVisibility(View.INVISIBLE);
+                /*gameList.remove();
+                player.getGameList().remove();*/
                 break;
             case 1:
                 gameNumber = player.getGame1ID();
+                player.setGame1IDAvalible(false);
+                spel1Knapp.setVisibility(View.INVISIBLE);
+                /*gameList.remove();
+                player.getGameList().remove();*/
                 break;
             case 2:
                 gameNumber = player.getGame2ID();
+                player.setGame2IDAvalible(false);
+                spel2Knapp.setVisibility(View.INVISIBLE);
+                /*gameList.remove();
+                player.getGameList().remove();*/
                 break;
             case 3:
                 gameNumber = player.getGame3ID();
+                player.setGame3IDAvalible(false);
+                spel3Knapp.setVisibility(View.INVISIBLE);
+                /*gameList.remove();
+                player.getGameList().remove();*/
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + btnClicked);
         }
 
-        //TODO Delete activeGame from database, Player class and activity screen where gameID == gameNumber
+        //TODO Delete activeGame from database & player class where gameID == gameNumber
 
     }
 
