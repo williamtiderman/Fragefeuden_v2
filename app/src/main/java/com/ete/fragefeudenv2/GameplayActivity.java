@@ -195,24 +195,12 @@ public class GameplayActivity extends AppCompatActivity {
             getNewQuestion();
         }
         else {
-            myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
+            myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(String.valueOf(gameID));
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    int gameRound = (int) snapshot.child("gameRound").getValue();
-
-                    if ((gameRound) % 2 == 1) {
-                        int currentPoints = (int) snapshot.child("playerTwoPoints").getValue();
-
-                        myRef.setValue("playerTwoPoints", currentPoints + correctAnswers);
-                    }
-                    else if ((gameRound) % 2 == 0) {
-                        int currentPoints = (int) snapshot.child("playerOnePoints").getValue();
-
-                        myRef.setValue("playerOnePoints", currentPoints + correctAnswers);
-                    }
-                    int currentRound = (int) snapshot.child("gameRound").getValue();
-                    myRef.setValue("playerOnePoints",currentRound + 1);
+                    myRef.child("playerOnePoints").setValue(correctAnswers);
+                    myRef.child("playerOnePoints").setValue(correctAnswers);
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
