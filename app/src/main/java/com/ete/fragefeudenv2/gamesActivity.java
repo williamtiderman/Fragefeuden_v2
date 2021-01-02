@@ -68,7 +68,8 @@ public class gamesActivity extends AppCompatActivity {
         createNewGameButton.setText("Laddar Aktiva Spel...");
 
         //Hämtar spelarens aktiva spel från databasen
-        myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName);
+
+        myRef = FirebaseDatabase.getInstance().getReference().child("players").child("William");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
