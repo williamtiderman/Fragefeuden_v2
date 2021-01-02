@@ -283,6 +283,7 @@ public class gamesActivity extends AppCompatActivity {
 
             spelKnapp.setText(String.valueOf(int_random));
             spelKnapp.setVisibility(View.VISIBLE);
+            spelKnapp.setEnabled(false);
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
             toast.show();
@@ -368,6 +369,7 @@ public class gamesActivity extends AppCompatActivity {
 
                         spelKnapp.setText(String.valueOf(gameID));
                         spelKnapp.setVisibility(View.VISIBLE);
+                        spelKnapp.setEnabled(true);
                     } else { //om spelet inte finns
                         Toast.makeText(gamesActivity.this, "Spelet hittades ej!", Toast.LENGTH_SHORT).show();
                     }
