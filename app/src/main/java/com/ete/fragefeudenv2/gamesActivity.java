@@ -313,7 +313,8 @@ public class gamesActivity extends AppCompatActivity {
         }
         String stringGameNumber = String.valueOf(gameNumber);
 
-        onClickIntent.putExtra(Intent.EXTRA_TEXT, stringGameNumber);
+        onClickIntent.putExtra("gameID", stringGameNumber);
+        onClickIntent.putExtra("playerName", player.getPlayerName());
         startActivity(onClickIntent);
     }
 
