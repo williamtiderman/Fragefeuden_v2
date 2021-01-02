@@ -198,23 +198,22 @@ public class GameplayActivity extends AppCompatActivity {
             getNewQuestion();
         }
         else {
-            myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
-            myRef.addValueEventListener(new ValueEventListener() {
+            myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(String.valueOf(gameID));
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    int gameRound = (int) snapshot.child("gameRound").getValue();
-                    if ((gameRound) % 2 == 1) {
-                        int currentPoints = (int) snapshot.child("playerTwoPoints").getValue();
 
-                        myRef.setValue("playerTwoPoints", currentPoints + correctAnswers);
+                    int gameRounds = Integer.parseInt(snapshot.child("gameRound").getValue().toString());
+                    if(gameRounds % 2 == 1) {
+                        int currentPoints = Integer.parseInt(snapshot.child("playerTwoPoints").getValue().toString());
+                        myRef.child("playerTwoPoints").setValue(correctAnswers + currentPoints);
+                        myRef.child("gameRound").setValue(1 + gameRounds);
                     }
-                    else if ((gameRound) % 2 == 0) {
-                        int currentPoints = (int) snapshot.child("playerOnePoints").getValue();
-
-                        myRef.setValue("playerOnePoints", currentPoints + correctAnswers);
+                    else if(gameRounds % 2 == 0){
+                        int currentPoints = Integer.parseInt(snapshot.child("playerOnePoints").getValue().toString());
+                        myRef.child("playerOnePoints").setValue(correctAnswers + currentPoints);
+                        myRef.child("gameRound").setValue(1 + gameRounds);
                     }
-                    int currentRound = (int) snapshot.child("gameRound").getValue();
-                    myRef.setValue("playerOnePoints",currentRound + 1);
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
