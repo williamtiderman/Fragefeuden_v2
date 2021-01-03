@@ -34,7 +34,7 @@ public class gamesActivity extends AppCompatActivity {
     FirebaseDatabase root;
     String playerName;
     String currentGame;
-    private final int MAX_ROUNDS = 3;
+    private final int MAX_ROUNDS = 9;
 
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
     private String playerOne, playerTwo;
