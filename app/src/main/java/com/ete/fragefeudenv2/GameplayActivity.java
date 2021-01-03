@@ -234,7 +234,7 @@ public class GameplayActivity extends AppCompatActivity {
     public boolean questionUsed() {
         //SKRIV METOD SOM KOLLAR OM FRÅGAN ÄR ANVÄND HÄR
         if (true) {
-            return true;
+            return false;
         }
         else {
             return false;
