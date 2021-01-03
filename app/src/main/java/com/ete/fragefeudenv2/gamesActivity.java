@@ -458,6 +458,7 @@ public class gamesActivity extends AppCompatActivity {
                 if(player.isGame0Finished())
                 {
                     onFinishedIntent.putExtra("gameID", stringGameNumber);
+                    onFinishedIntent.putExtra("currentGame", "Game0ID");
                     onFinishedIntent.putExtra("playerName", player.getPlayerName());
                     startActivity(onFinishedIntent);
                 }
@@ -473,6 +474,7 @@ public class gamesActivity extends AppCompatActivity {
                 if(player.isGame1Finished())
                 {
                     onFinishedIntent.putExtra("gameID", stringGameNumber);
+                    onFinishedIntent.putExtra("currentGame", "Game1ID");
                     onFinishedIntent.putExtra("playerName", player.getPlayerName());
                     startActivity(onFinishedIntent);
                 }
@@ -489,6 +491,7 @@ public class gamesActivity extends AppCompatActivity {
                 if(player.isGame2Finished())
                 {
                     onFinishedIntent.putExtra("gameID", stringGameNumber);
+                    onFinishedIntent.putExtra("currentGame", "Game2ID");
                     onFinishedIntent.putExtra("playerName", player.getPlayerName());
                     startActivity(onFinishedIntent);
                 }
@@ -505,6 +508,7 @@ public class gamesActivity extends AppCompatActivity {
                 if(player.isGame3Finished())
                 {
                     onFinishedIntent.putExtra("gameID", stringGameNumber);
+                    onFinishedIntent.putExtra("currentGame", "Game3ID");
                     onFinishedIntent.putExtra("playerName", player.getPlayerName());
                     startActivity(onFinishedIntent);
                 }
@@ -672,21 +676,11 @@ public class gamesActivity extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String playerTwo = snapshot.child("playerTwo").getValue().toString();
-                String playerOne = snapshot.child("playerOne").getValue().toString();
 
                 myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber));
                 myRef.removeValue();
 
                 myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName).child(currentGame);
-                myRef.setValue(null);
-
-                if(snapshot.child("playerOne").getValue().toString().equals(playerName)){
-                    myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerTwo).child(currentGame);
-                }
-                else{
-                    myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerOne).child(currentGame);
-                }
                 myRef.setValue(null);
 
                 finish();
