@@ -14,6 +14,43 @@ public class Player {
     private boolean game1IDAvalible;
     private boolean game2IDAvalible;
     private boolean game3IDAvalible;
+    private boolean game0Finished;
+    private boolean game1Finished;
+
+    public boolean isGame0Finished() {
+        return game0Finished;
+    }
+
+    public void setGame0Finished(boolean game0Finished) {
+        this.game0Finished = game0Finished;
+    }
+
+    public boolean isGame1Finished() {
+        return game1Finished;
+    }
+
+    public void setGame1Finished(boolean game1Finished) {
+        this.game1Finished = game1Finished;
+    }
+
+    public boolean isGame2Finished() {
+        return game2Finished;
+    }
+
+    public void setGame2Finished(boolean game2Finished) {
+        this.game2Finished = game2Finished;
+    }
+
+    public boolean isGame3Finished() {
+        return game3Finished;
+    }
+
+    public void setGame3Finished(boolean game3Finished) {
+        this.game3Finished = game3Finished;
+    }
+
+    private boolean game2Finished;
+    private boolean game3Finished;
 
 
 
