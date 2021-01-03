@@ -109,10 +109,22 @@ public class gamesActivity extends AppCompatActivity {
                         spel0Knapp.setText("Spel-ID: " + gameIDString);
                     }
                     else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-                        spel0Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString());
+
+                        String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
+                        String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
+                        String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
+
+                        spel0Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
+
+
                     }
                     else{
-                        spel0Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString());
+                        String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
+                        String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
+                        String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
+
+
+                        spel0Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
                     }
 
 
@@ -154,10 +166,19 @@ public class gamesActivity extends AppCompatActivity {
                         spel1Knapp.setText("Spel-ID: " + gameIDString);
                     }
                     else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-                        spel1Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString());
+                        String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
+                        String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
+                        String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
+
+                        spel1Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
                     }
                     else{
-                        spel1Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString());
+                        String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
+                        String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
+                        String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
+
+
+                        spel1Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
                     }
 
                     spel1Knapp.setVisibility(View.VISIBLE);
@@ -197,10 +218,19 @@ public class gamesActivity extends AppCompatActivity {
                         spel2Knapp.setText("Spel-ID: " + gameIDString);
                     }
                     else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-                        spel2Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString());
+                        String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
+                        String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
+                        String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
+
+                        spel2Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
                     }
                     else{
-                        spel2Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString());
+                        String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
+                        String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
+                        String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
+
+
+                        spel2Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
                     }
 
 
@@ -241,10 +271,19 @@ public class gamesActivity extends AppCompatActivity {
                         spel3Knapp.setText("Spel-ID: " + gameIDString);
                     }
                     else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-                        spel3Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString());
+                        String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
+                        String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
+                        String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
+
+                        spel3Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
                     }
                     else{
-                        spel3Knapp.setText(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString());
+                        String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
+                        String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
+                        String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
+
+
+                        spel3Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
                     }
 
                     spel3Knapp.setVisibility(View.VISIBLE);
