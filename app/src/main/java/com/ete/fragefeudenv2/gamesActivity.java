@@ -114,7 +114,7 @@ public class gamesActivity extends AppCompatActivity {
                         String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
                         String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
 
-                        spel0Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
+                        spel0Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
 
 
                     }
@@ -124,7 +124,7 @@ public class gamesActivity extends AppCompatActivity {
                         String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
 
 
-                        spel0Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
+                        spel0Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                     }
 
 
@@ -170,7 +170,7 @@ public class gamesActivity extends AppCompatActivity {
                         String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
                         String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
 
-                        spel1Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
+                        spel1Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                     }
                     else{
                         String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
@@ -178,7 +178,7 @@ public class gamesActivity extends AppCompatActivity {
                         String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
 
 
-                        spel1Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
+                        spel1Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                     }
 
                     spel1Knapp.setVisibility(View.VISIBLE);
@@ -222,7 +222,7 @@ public class gamesActivity extends AppCompatActivity {
                         String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
                         String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
 
-                        spel2Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
+                        spel2Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                     }
                     else{
                         String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
@@ -230,7 +230,7 @@ public class gamesActivity extends AppCompatActivity {
                         String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
 
 
-                        spel2Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
+                        spel2Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                     }
 
 
@@ -275,7 +275,7 @@ public class gamesActivity extends AppCompatActivity {
                         String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
                         String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
 
-                        spel3Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
+                        spel3Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                     }
                     else{
                         String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
@@ -283,7 +283,7 @@ public class gamesActivity extends AppCompatActivity {
                         String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
 
 
-                        spel3Knapp.setText(opponent + " " + yourScore + "-" + opponentScore);
+                        spel3Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                     }
 
                     spel3Knapp.setVisibility(View.VISIBLE);
