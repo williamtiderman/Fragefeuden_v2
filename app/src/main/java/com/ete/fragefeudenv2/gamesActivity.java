@@ -118,6 +118,9 @@ public class gamesActivity extends AppCompatActivity {
                         else if(gameRoundsCheck % 2 == 0 && playerOne == true){
                             spel0Knapp.setEnabled(true);
                         }
+                        else if(gameRoundsCheck == -1){
+                            spel0Knapp.setEnabled(false);
+                        }
 
 
                         if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
@@ -193,6 +196,9 @@ public class gamesActivity extends AppCompatActivity {
                         else if(gameRoundsCheck % 2 == 0 && playerOne == true){
                             spel1Knapp.setEnabled(true);
                         }
+                        else if(gameRoundsCheck == -1){
+                            spel1Knapp.setEnabled(false);
+                        }
 
 
                         if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
@@ -265,6 +271,9 @@ public class gamesActivity extends AppCompatActivity {
                         else if(gameRoundsCheck % 2 == 0 && playerOne == true){
                             spel2Knapp.setEnabled(true);
                         }
+                        else if(gameRoundsCheck == -1){
+                            spel2Knapp.setEnabled(false);
+                        }
 
 
                         if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
@@ -336,6 +345,9 @@ public class gamesActivity extends AppCompatActivity {
                         }
                         else if(gameRoundsCheck % 2 == 0 && playerOne == true){
                             spel3Knapp.setEnabled(true);
+                        }
+                        else if(gameRoundsCheck == -1){
+                            spel3Knapp.setEnabled(false);
                         }
 
 
@@ -688,8 +700,27 @@ public class gamesActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber));
-                myRef.removeValue();
+                FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber)).child("gameRound").setValue(-1);
+
+                if (snapshot.child("playerOne").getValue().toString().equals(playerName)) {
+                    FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber)).child("playerOneDone").setValue("true");
+                }
+                else {
+                    FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber)).child("playerTwoDone").setValue("true");
+                }
+
+                if (snapshot.child("playerOne").getValue().toString().equals(playerName)) { //om man är spelare 1
+                    if (snapshot.child("playerTwoDone").getValue().toString().equals("true")) { //kolla om spelare två är klar
+                        myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber)); //ta isåfall bort matchen ifrån activeGames
+                        myRef.removeValue();
+                    }
+                }
+                else { //vice versa
+                    if (snapshot.child("playerOneDone").getValue().toString().equals("true")) {
+                        myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber));
+                        myRef.removeValue();
+                    }
+                }
 
                 myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName).child(currentGame);
                 myRef.setValue(null);
