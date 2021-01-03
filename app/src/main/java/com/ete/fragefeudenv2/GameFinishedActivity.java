@@ -24,6 +24,7 @@ public class GameFinishedActivity extends AppCompatActivity {
     private String playerScore;
     private String opponentName;
     private String opponentScore;
+    private boolean status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +80,30 @@ public class GameFinishedActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber);
-                myRef.removeValue();
+                if (snapshot.child("playerOne").getValue().toString().equals(playerName)) {
+                    FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber).child("playerOne").setValue("klAr!");
+                }
+                else {
+                    FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber).child("playerTwo").setValue("klAr!");
+                }
 
+                if (snapshot.child("playerOne").getValue().toString().equals(playerName)) { //om man är spelare 1
+                    if (snapshot.child("playerTwo").getValue().toString().equals("klAr!")) { //kolla om spelare två är klar
+                        myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber); //ta isåfall bort matchen ifrån activeGames
+                        myRef.removeValue();
+                    }
+                }
+                else { //vice versa
+                    if (snapshot.child("playerOne").getValue().toString().equals("klAr!")) {
+                        myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber);
+                        myRef.removeValue();
+                    }
+                }
                 myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName).child(currentGame);
                 myRef.setValue(null);
 
-                finish();
-                startActivity(getIntent());
+                Intent gamesIntent = new Intent(com.ete.fragefeudenv2.GameFinishedActivity.this, gamesActivity.class);
+                startActivity(gamesIntent);
             }
 
             @Override
@@ -94,5 +111,21 @@ public class GameFinishedActivity extends AppCompatActivity {
                 Toast.makeText(GameFinishedActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public boolean otherPlayerFinished() {
+        myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(GameFinishedActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
+            }
+        });
+        return status;
     }
 }
