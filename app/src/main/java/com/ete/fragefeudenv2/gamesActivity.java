@@ -595,28 +595,28 @@ public class gamesActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
                 toast.show();
             }
-        }else {
+        } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Ange ett Spel-ID!", Toast.LENGTH_LONG);
             toast.show();
+        }
     }
 
     public void onClickLeaveGame(View view){
-            if (!leavingGame) { //Starta lämna-spel-läge när man trycker på knappen
-                leavingGame = true;
-                leaveGameButton.setText("Avbryt Lämna Spel");
-                spel0Knapp.setBackgroundColor(Color.RED);
-                spel1Knapp.setBackgroundColor(Color.RED);
-                spel2Knapp.setBackgroundColor(Color.RED);
-                spel3Knapp.setBackgroundColor(Color.RED);
-                spel0Knapp.setEnabled(true);
-                spel1Knapp.setEnabled(true);
-                spel2Knapp.setEnabled(true);
-                spel3Knapp.setEnabled(true);
+        if (!leavingGame) { //Starta lämna-spel-läge när man trycker på knappen
+            leavingGame = true;
+            leaveGameButton.setText("Avbryt Lämna Spel");
+            spel0Knapp.setBackgroundColor(Color.RED);
+            spel1Knapp.setBackgroundColor(Color.RED);
+            spel2Knapp.setBackgroundColor(Color.RED);
+            spel3Knapp.setBackgroundColor(Color.RED);
+            spel0Knapp.setEnabled(true);
+            spel1Knapp.setEnabled(true);
+            spel2Knapp.setEnabled(true);
+            spel3Knapp.setEnabled(true);
 
-            } else { //Avbryt lämna spel läge genom att trycka på knappen igen
-                finish();
-                startActivity(getIntent());
-            }
+        } else { //Avbryt lämna spel läge genom att trycka på knappen igen
+            finish();
+            startActivity(getIntent());
         }
     }
 
