@@ -120,8 +120,9 @@ public class gamesActivity extends AppCompatActivity {
                         }
 
 
-                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("")){
+                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
                             spel0Knapp.setText("Spel-ID: " + gameIDString);
+                            spel0Knapp.setEnabled(false);
                         }
                         else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
 
@@ -194,8 +195,9 @@ public class gamesActivity extends AppCompatActivity {
                         }
 
 
-                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("")){
+                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
                             spel1Knapp.setText("Spel-ID: " + gameIDString);
+                            spel1Knapp.setEnabled(false);
                         }
                         else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
 
@@ -265,8 +267,9 @@ public class gamesActivity extends AppCompatActivity {
                         }
 
 
-                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("")){
+                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
                             spel2Knapp.setText("Spel-ID: " + gameIDString);
+                            spel2Knapp.setEnabled(false);
                         }
                         else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
 
@@ -336,8 +339,9 @@ public class gamesActivity extends AppCompatActivity {
                         }
 
 
-                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("")){
+                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
                             spel3Knapp.setText("Spel-ID: " + gameIDString);
+                            spel3Knapp.setEnabled(false);
                         }
                         else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
 
