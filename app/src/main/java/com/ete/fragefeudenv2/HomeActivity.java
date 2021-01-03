@@ -4,27 +4,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 public class HomeActivity extends AppCompatActivity {
+    private SharedPreferences namePreference;
+    private EditText playerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_home);
+        playerView = (EditText) findViewById(R.id.playerNameText);
+
+        namePreference = getSharedPreferences("previousPlayerName", MODE_PRIVATE);
+        if (!namePreference.getString("previousPlayerName","noPreviousName").equals("noPreviousName")) {
+            playerView.setText(namePreference.getString("previousPlayerName",""));
+        }
         //Alla älskar hundar
     }
 
     public void onClickPlay(View view) {
+        String playerName = playerView.getText().toString();
 
-        EditText playerView = (EditText) findViewById(R.id.playerNameText);
-        String playerName = playerView.getText().toString().toLowerCase().trim();
+        SharedPreferences.Editor editor = namePreference.edit();
+        editor.putString("previousPlayerName", playerName);
+        editor.apply();
 
         Intent onClickIntent = new Intent(HomeActivity.this, gamesActivity.class);
-        onClickIntent.putExtra("playerName", playerName);
+        onClickIntent.putExtra("playerName", playerName.toLowerCase().trim());
 
         startActivity(onClickIntent);
     }
