@@ -458,6 +458,7 @@ public class gamesActivity extends AppCompatActivity {
                 if(player.isGame0Finished())
                 {
                     onFinishedIntent.putExtra("gameID", stringGameNumber);
+                    onFinishedIntent.putExtra("playerName", player.getPlayerName());
                     startActivity(onFinishedIntent);
                 }
                 else{
@@ -472,6 +473,7 @@ public class gamesActivity extends AppCompatActivity {
                 if(player.isGame1Finished())
                 {
                     onFinishedIntent.putExtra("gameID", stringGameNumber);
+                    onFinishedIntent.putExtra("playerName", player.getPlayerName());
                     startActivity(onFinishedIntent);
                 }
                 else{
@@ -487,6 +489,7 @@ public class gamesActivity extends AppCompatActivity {
                 if(player.isGame2Finished())
                 {
                     onFinishedIntent.putExtra("gameID", stringGameNumber);
+                    onFinishedIntent.putExtra("playerName", player.getPlayerName());
                     startActivity(onFinishedIntent);
                 }
                 else{
@@ -502,6 +505,7 @@ public class gamesActivity extends AppCompatActivity {
                 if(player.isGame3Finished())
                 {
                     onFinishedIntent.putExtra("gameID", stringGameNumber);
+                    onFinishedIntent.putExtra("playerName", player.getPlayerName());
                     startActivity(onFinishedIntent);
                 }
                 else{
