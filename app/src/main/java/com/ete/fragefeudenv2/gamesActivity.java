@@ -34,7 +34,7 @@ public class gamesActivity extends AppCompatActivity {
     FirebaseDatabase root;
     String playerName;
     String currentGame;
-    private final int MAX_ROUNDS = 3;
+    private final int MAX_ROUNDS = 9;
 
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
     private String playerOne, playerTwo;
@@ -103,6 +103,7 @@ public class gamesActivity extends AppCompatActivity {
                         player.setGame0ID(foundGameID);
                         player.setGame0Finished(true);
                         spel0Knapp.setBackgroundColor(getResources().getColor(R.color.green));
+                        spel0Knapp.setEnabled(true);
                     }
                     else{
                         if(gameRoundsCheck % 2 == 1 && playerOne == false){
@@ -176,6 +177,7 @@ public class gamesActivity extends AppCompatActivity {
                         player.setGame1ID(foundGameID);
                         player.setGame1Finished(true);
                         spel1Knapp.setBackgroundColor(getResources().getColor(R.color.green));
+                        spel1Knapp.setEnabled(true);
                     }
                     else{
                         if(gameRoundsCheck % 2 == 1 && playerOne == false){
@@ -246,6 +248,7 @@ public class gamesActivity extends AppCompatActivity {
                         player.setGame2ID(foundGameID);
                         player.setGame2Finished(true);
                         spel2Knapp.setBackgroundColor(getResources().getColor(R.color.green));
+                        spel2Knapp.setEnabled(true);
                     }
                     else{
                         if(gameRoundsCheck % 2 == 1 && playerOne == false){
@@ -316,6 +319,7 @@ public class gamesActivity extends AppCompatActivity {
                         player.setGame3ID(foundGameID);
                         player.setGame3Finished(true);
                         spel3Knapp.setBackgroundColor(getResources().getColor(R.color.green));
+                        spel3Knapp.setEnabled(true);
                     }
                     else{
                         if(gameRoundsCheck % 2 == 1 && playerOne == false){
