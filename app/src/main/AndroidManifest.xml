@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fragefeudenv2">
-        <activity android:name=".GameplayActivity"></activity>
+        <activity android:name=".GameFinishedActivity"></activity>
+        <activity android:name=".GameplayActivity" />
         <activity android:name=".gamesActivity" />
         <activity android:name=".addQuestionActivity" />
         <activity android:name=".HomeActivity" />
