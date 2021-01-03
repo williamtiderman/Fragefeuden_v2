@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onClickPlay(View view) {
 
         EditText playerView = (EditText) findViewById(R.id.playerNameText);
-        String playerName = playerView.getText().toString();
+        String playerName = playerView.getText().toString().toLowerCase().trim();
 
         Intent onClickIntent = new Intent(HomeActivity.this, gamesActivity.class);
         onClickIntent.putExtra("playerName", playerName);

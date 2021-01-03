@@ -710,7 +710,7 @@ public class gamesActivity extends AppCompatActivity {
                 }
 
                 if (snapshot.child("playerOne").getValue().toString().equals(playerName)) { //om man är spelare 1
-                    if (snapshot.child("playerTwoDone").getValue().toString().equals("true")) { //kolla om spelare två är klar
+                    if (snapshot.child("playerTwoDone").getValue().toString().equals("true") || snapshot.child("playerTwo").getValue().toString().equals("")) { //kolla om spelare två är klar (om det finns en spelare 2)
                         myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber)); //ta isåfall bort matchen ifrån activeGames
                         myRef.removeValue();
                     }
