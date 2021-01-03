@@ -112,7 +112,6 @@ public class GameplayActivity extends AppCompatActivity {
                 String wrong2String = "";
                 String wrong3String = "";
 
-                //Bästa sättet jag hittade att slumpa fram en fråga
                 int i = 0;
                 for (DataSnapshot snap : snapshot.getChildren()) { //Uppdaterar fråga tills den når det framslumpade talet, ye det låter dumt men jag google och det var typ det bästa sättet
                     if (i == randomQuestionIndex) {
@@ -126,7 +125,7 @@ public class GameplayActivity extends AppCompatActivity {
                     i++;
                 }
 
-                if (questionUsed()) getNewQuestion();
+                if (questionUsed(questionString)) getNewQuestion();
 
                 ArrayList<String> optionsList = new ArrayList<String>();
                 optionsList.add(correctString);
@@ -231,8 +230,8 @@ public class GameplayActivity extends AppCompatActivity {
         // Tom så att man inte kan backa ur spel
     }
 
-    public boolean questionUsed() {
-        //SKRIV METOD SOM KOLLAR OM FRÅGAN ÄR ANVÄND HÄR
+    public boolean questionUsed(String questionString) {
+        //TODO SKRIV METOD SOM KOLLAR OM FRÅGAN ÄR ANVÄND HÄR
         if (true) {
             return false;
         }

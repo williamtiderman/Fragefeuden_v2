@@ -81,20 +81,20 @@ public class GameFinishedActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if (snapshot.child("playerOne").getValue().toString().equals(playerName)) {
-                    FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber).child("playerOne").setValue("klAr!");
+                    FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber).child("playerOneDone").setValue("true");
                 }
                 else {
-                    FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber).child("playerTwo").setValue("klAr!");
+                    FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber).child("playerTwoDone").setValue("true");
                 }
 
                 if (snapshot.child("playerOne").getValue().toString().equals(playerName)) { //om man är spelare 1
-                    if (snapshot.child("playerTwo").getValue().toString().equals("klAr!")) { //kolla om spelare två är klar
+                    if (snapshot.child("playerTwoDone").getValue().toString().equals("true")) { //kolla om spelare två är klar
                         myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber); //ta isåfall bort matchen ifrån activeGames
                         myRef.removeValue();
                     }
                 }
                 else { //vice versa
-                    if (snapshot.child("playerOne").getValue().toString().equals("klAr!")) {
+                    if (snapshot.child("playerOneDone").getValue().toString().equals("true")) {
                         myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber);
                         myRef.removeValue();
                     }

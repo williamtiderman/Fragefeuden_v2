@@ -32,8 +32,7 @@ public class gamesActivity extends AppCompatActivity {
     Player player;
     DatabaseReference myRef;
     FirebaseDatabase root;
-    String playerName;
-    String currentGame;
+    String playerName, currentGame, playerOneDone, playerTwoDone;
     private final int MAX_ROUNDS = 9;
 
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
@@ -397,7 +396,6 @@ public class gamesActivity extends AppCompatActivity {
 
         Game newGame = new Game(int_random);
 
-        //Byt denna när man ska ha mer spel
         if (numOfGames < 4) {
             player.getGameList().add(newGame);
 
@@ -407,8 +405,11 @@ public class gamesActivity extends AppCompatActivity {
             gameID = newGame.getGame_ID();
             playerOne = player.getPlayerName();
 
+            playerOneDone = "false";
+            playerTwoDone = "false";
 
-            databasePlayers sendGame = new databasePlayers(gameID, playerOne, playerTwo, playerOnePoints, playerTwoPoints, gameRound);
+
+            databasePlayers sendGame = new databasePlayers(gameID, playerOne, playerTwo, playerOnePoints, playerTwoPoints, gameRound, playerOneDone, playerTwoDone);
             myRef.child(String.valueOf(gameID)).setValue(sendGame);
 
             myRef = root.getReference("players");
@@ -536,7 +537,7 @@ public class gamesActivity extends AppCompatActivity {
 
     public void joinGame(View view) {
         EditText joinGameID = (EditText) findViewById(R.id.joinGameNumber);
-        if (joinGameID.getText().toString().equals("")) {
+        if (!joinGameID.getText().toString().equals("")) {
             int numOfGames = player.getGameList().size();
             if (numOfGames < 4) {
                 String inputID = joinGameID.getText().toString();

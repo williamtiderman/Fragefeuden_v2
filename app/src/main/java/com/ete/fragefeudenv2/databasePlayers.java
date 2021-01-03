@@ -5,17 +5,19 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class databasePlayers  {
     private int gameID, gameRound, playerOnePoints, playerTwoPoints;
-    private String playerOne, playerTwo;
+    private String playerOne, playerTwo, playerOneDone, playerTwoDone;
     DatabaseReference myRef;
     FirebaseDatabase root;
 
-    public databasePlayers(int gameID, String playerOne, String playerTwo, int playerOnePoints, int playerTwoPoints, int gameRound){
+    public databasePlayers(int gameID, String playerOne, String playerTwo, int playerOnePoints, int playerTwoPoints, int gameRound, String playerOneDone, String playerTwoDone){
         this.gameID = gameID;
         this.playerOne = playerOne;
         this.playerTwo = "";
         this.playerOnePoints = 0;
         this.playerTwoPoints = 0;
         this.gameRound = 1;
+        this.playerOneDone = "false";
+        this.playerTwoDone = "false";
     }
     public void gameStart(){
 
@@ -67,5 +69,21 @@ public class databasePlayers  {
 
     public void setPlayerTwo(String playerTwo) {
         this.playerTwo = playerTwo;
+    }
+
+    public String getPlayerOneDone() {
+        return playerOneDone;
+    }
+
+    public void setPlayerOneDone(String playerOne) {
+        this.playerOneDone = playerOneDone;
+    }
+
+    public String getPlayerTwoDone() {
+        return playerTwoDone;
+    }
+
+    public void setPlayerTwoDone(String playerTwo) {
+        this.playerTwoDone = playerTwoDone;
     }
 }
