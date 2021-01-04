@@ -21,9 +21,7 @@ public class HomeActivity extends AppCompatActivity {
         playerView = (EditText) findViewById(R.id.playerNameText);
 
         namePreference = getSharedPreferences("previousPlayerName", MODE_PRIVATE);
-        if (!namePreference.getString("previousPlayerName","noPreviousName").equals("noPreviousName")) {
-            playerView.setText(namePreference.getString("previousPlayerName",""));
-        }
+        playerView.setText(namePreference.getString("previousPlayerName",""));
         //Alla älskar hundar
     }
 
