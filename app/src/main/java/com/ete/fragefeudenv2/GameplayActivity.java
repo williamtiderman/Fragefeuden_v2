@@ -115,7 +115,7 @@ public class GameplayActivity extends AppCompatActivity {
                 String wrong3String = "";
 
                 int i = 0;
-                for (DataSnapshot snap : snapshot.getChildren()) { //Uppdaterar fråga tills den når det framslumpade talet, ye det låter dumt men jag google och det var typ det bästa sättet
+                for (DataSnapshot snap : snapshot.getChildren()) { //Uppdaterar fråga tills den når det framslumpade talet
                     if (i == randomQuestionIndex) {
                         questionString = snap.child("questionString").getValue().toString();
                         correctString = snap.child("correctString").getValue().toString();

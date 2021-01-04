@@ -24,6 +24,8 @@ public class GameFinishedActivity extends AppCompatActivity {
     private String playerScore;
     private String opponentName;
     private String opponentScore;
+    private int wins = 0;
+    private int losses = 0;
     private boolean status;
 
     @Override
@@ -35,6 +37,24 @@ public class GameFinishedActivity extends AppCompatActivity {
         gameNumber = intent.getStringExtra("gameID");
         currentGame = intent.getStringExtra("currentGame");
         playerName = intent.getStringExtra("playerName");
+
+        myRef = FirebaseDatabase.getInstance().getReference("players").child(playerName);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("Wins").exists()) {
+                    wins = Integer.parseInt(snapshot.child("Wins").getValue().toString());
+                }
+                if (snapshot.child("Losses").exists()) {
+                    losses = Integer.parseInt(snapshot.child("Losses").getValue().toString());
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(GameFinishedActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
+            }
+        });
 
         myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(gameNumber);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -54,12 +74,14 @@ public class GameFinishedActivity extends AppCompatActivity {
                 TextView resultTV = findViewById(R.id.resultTextView);
                 if (Integer.parseInt(playerScore) > Integer.parseInt(opponentScore)) {
                     resultTV.setText("Du vann!");
+                    FirebaseDatabase.getInstance().getReference("players").child(playerName.toLowerCase().trim()).child("Wins").setValue(wins+1);
                 }
                 else if (Integer.parseInt(playerScore) == Integer.parseInt(opponentScore)) {
                     resultTV.setText("Oavgjort!");
                 }
                 else {
                     resultTV.setText("Du förlorade!");
+                    FirebaseDatabase.getInstance().getReference("players").child(playerName.toLowerCase().trim()).child("Losses").setValue(losses+1);
                 }
 
                 TextView yourScoreTV = findViewById(R.id.yourScoreTextView);

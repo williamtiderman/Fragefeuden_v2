@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +47,9 @@ public class gamesActivity extends AppCompatActivity {
     private Button spel1Knapp;
     private Button spel2Knapp;
     private Button spel3Knapp;
+    private TextView statsTextView;
+    private String wins = "0";
+    private String losses = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,7 @@ public class gamesActivity extends AppCompatActivity {
         Button createNewGameButton = findViewById(R.id.startaNytt);
         Button joinGameButton = findViewById(R.id.joinGame);
         leaveGameButton = findViewById(R.id.leaveGameButton);
+        statsTextView = findViewById(R.id.statsTextView);
 
         createNewGameButton.setEnabled(false);
         joinGameButton.setEnabled(false);
@@ -73,11 +78,19 @@ public class gamesActivity extends AppCompatActivity {
         //Hämtar spelarens aktiva spel från databasen
 
         myRef = FirebaseDatabase.getInstance().getReference();
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 player = new Player(playerName);
+
+
+                if (snapshot.child("players").child(playerName).child("Wins").exists()) {
+                    wins = snapshot.child("players").child(playerName).child("Wins").getValue().toString();
+                }
+                if (snapshot.child("players").child(playerName).child("Losses").exists()) {
+                    losses = snapshot.child("players").child(playerName).child("Losses").getValue().toString();
+                }
+                statsTextView.setText("Vinster: " + wins + " | Förluster: " + losses);
 
                 if (snapshot.child("players").child(playerName).child("Game0ID").exists()) {
 
