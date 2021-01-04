@@ -735,7 +735,6 @@ public class gamesActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public void onBackPressed() {
         Intent onBackIntent = new Intent(gamesActivity.this, HomeActivity.class);

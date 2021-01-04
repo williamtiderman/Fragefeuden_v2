@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class HomeActivity extends AppCompatActivity {
     private SharedPreferences namePreference;
     private EditText playerView;
@@ -22,7 +25,6 @@ public class HomeActivity extends AppCompatActivity {
 
         namePreference = getSharedPreferences("previousPlayerName", MODE_PRIVATE);
         playerView.setText(namePreference.getString("previousPlayerName",""));
-        //Alla älskar hundar
     }
 
     public void onClickPlay(View view) {

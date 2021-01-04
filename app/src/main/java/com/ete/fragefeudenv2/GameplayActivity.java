@@ -34,6 +34,7 @@ public class GameplayActivity extends AppCompatActivity {
     Button optionButton4;
     Button nextQuestionButton;
     TextView resultText;
+    Boolean questionUsed = false;
 
     int q = 0;
 
@@ -60,7 +61,6 @@ public class GameplayActivity extends AppCompatActivity {
         optionButton4 = findViewById(R.id.optionButton4);
         nextQuestionButton = findViewById(R.id.nextQuestionButton);
         resultText = findViewById(R.id.resultTextView);
-
 
         Intent intent = getIntent();
         String stringGameID = intent.getStringExtra("gameID");
@@ -96,6 +96,8 @@ public class GameplayActivity extends AppCompatActivity {
         }
         answeredQuestions++;
         nextQuestionButton.setVisibility(View.VISIBLE);
+
+
     }
 
     public void getNewQuestion() {
@@ -122,6 +124,7 @@ public class GameplayActivity extends AppCompatActivity {
                         wrong3String = snap.child("wrong3String").getValue().toString();
                         break;
                     }
+                    
                     i++;
                 }
 
@@ -140,6 +143,19 @@ public class GameplayActivity extends AppCompatActivity {
                 optionButton2.setText(optionsList.get(1));
                 optionButton3.setText(optionsList.get(2));
                 optionButton4.setText(optionsList.get(3));
+
+                myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(String.valueOf(gameID));
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        myRef.child("usedQuestion").child(questionString).setValue(questionString);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
 
             @Override
@@ -231,12 +247,18 @@ public class GameplayActivity extends AppCompatActivity {
     }
 
     public boolean questionUsed(String questionString) {
-        //TODO SKRIV METOD SOM KOLLAR OM FRÅGAN ÄR ANVÄND HÄR
-        if (true) {
-            return false;
-        }
-        else {
-            return false;
-        }
+        myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(String.valueOf(gameID)).child("usedQuestion");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                questionUsed = snapshot.hasChild(questionString);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return questionUsed;
     }
 }
