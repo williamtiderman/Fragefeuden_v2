@@ -125,11 +125,12 @@ public class GameplayActivity extends AppCompatActivity {
                 String wrong1String = "";
                 String wrong2String = "";
                 String wrong3String = "";
-
+                questionUsed = false;
                 int i = 0;
                 for (DataSnapshot snap : snapshot.getChildren()) { //Uppdaterar fråga tills den når det framslumpade talet
                     if (i == randomQuestionIndex) {
                         questionString = snap.child("questionString").getValue().toString();
+                        questionUsed(questionString);
                         correctString = snap.child("correctString").getValue().toString();
                         wrong1String = snap.child("wrong1String").getValue().toString();
                         wrong2String = snap.child("wrong2String").getValue().toString();
@@ -140,10 +141,10 @@ public class GameplayActivity extends AppCompatActivity {
                     i++;
                 }
 
-                questionUsed = false;
+
 
                 //Kollar om frågan har varit använd i denna match
-                questionUsed(questionString);
+
 
                 if (!questionUsed) {
                     ArrayList<String> optionsList = new ArrayList<String>();
@@ -159,7 +160,7 @@ public class GameplayActivity extends AppCompatActivity {
                     optionButton2.setText(optionsList.get(1));
                     optionButton3.setText(optionsList.get(2));
                     optionButton4.setText(optionsList.get(3));
-                } else return;
+                }
             }
 
             @Override
