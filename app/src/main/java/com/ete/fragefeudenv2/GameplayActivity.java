@@ -141,6 +141,8 @@ public class GameplayActivity extends AppCompatActivity {
                 }
 
                 questionUsed = false;
+
+                //Kollar om frågan har varit använd i denna match
                 questionUsed(questionString);
 
                 if (!questionUsed) {
