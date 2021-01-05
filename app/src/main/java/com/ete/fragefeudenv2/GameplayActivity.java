@@ -74,7 +74,7 @@ public class GameplayActivity extends AppCompatActivity {
         getNewQuestion();
     }
 
-    public void checkAnswer() {
+    public void checkAnswer() { //krashar ibland randomly när den slumpar fram ny fråga...
         optionButton1.setEnabled(false);
         optionButton2.setEnabled(false);
         optionButton3.setEnabled(false);
