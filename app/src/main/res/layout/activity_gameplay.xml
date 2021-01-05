@@ -86,7 +86,6 @@
         android:id="@+id/resultTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="cursive"
         android:text=""
         android:textSize="56sp"
         app:layout_constraintBottom_toTopOf="@+id/questionText"

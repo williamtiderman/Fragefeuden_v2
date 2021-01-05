@@ -109,6 +109,9 @@ public class GameFinishedActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber).child("playerTwoDone").setValue("true");
                 }
 
+                myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName).child(currentGame);
+                myRef.setValue(null);
+
                 if (snapshot.child("playerOne").getValue().toString().equals(playerName)) { //om man är spelare 1
                     if (snapshot.child("playerTwoDone").getValue().toString().equals("true")) { //kolla om spelare två är klar
                         myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(gameNumber); //ta isåfall bort matchen ifrån activeGames
@@ -121,8 +124,6 @@ public class GameFinishedActivity extends AppCompatActivity {
                         myRef.removeValue();
                     }
                 }
-                myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName).child(currentGame);
-                myRef.setValue(null);
 
                 Intent gamesIntent = new Intent(com.ete.fragefeudenv2.GameFinishedActivity.this, gamesActivity.class);
                 startActivity(gamesIntent);

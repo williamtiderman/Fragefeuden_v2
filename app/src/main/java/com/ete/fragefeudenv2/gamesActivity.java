@@ -722,6 +722,9 @@ public class gamesActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber)).child("playerTwoDone").setValue("true");
                 }
 
+                myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName).child(currentGame);
+                myRef.setValue(null);
+
                 if (snapshot.child("playerOne").getValue().toString().equals(playerName)) { //om man är spelare 1
                     if (snapshot.child("playerTwoDone").getValue().toString().equals("true") || snapshot.child("playerTwo").getValue().toString().equals("")) { //kolla om spelare två är klar (om det finns en spelare 2)
                         myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameNumber)); //ta isåfall bort matchen ifrån activeGames
@@ -734,9 +737,6 @@ public class gamesActivity extends AppCompatActivity {
                         myRef.removeValue();
                     }
                 }
-
-                myRef = FirebaseDatabase.getInstance().getReference().child("players").child(playerName).child(currentGame);
-                myRef.setValue(null);
 
                 finish();
                 startActivity(getIntent());
