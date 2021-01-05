@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class GameplayActivity extends AppCompatActivity {
@@ -96,8 +98,18 @@ public class GameplayActivity extends AppCompatActivity {
         }
         answeredQuestions++;
         nextQuestionButton.setVisibility(View.VISIBLE);
+        myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(String.valueOf(gameID));
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                myRef.child("usedQuestion").child(questionString).setValue(questionString);
+            }
 
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(GameplayActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void getNewQuestion() {
@@ -124,38 +136,28 @@ public class GameplayActivity extends AppCompatActivity {
                         wrong3String = snap.child("wrong3String").getValue().toString();
                         break;
                     }
-                    
+
                     i++;
                 }
 
-                if (questionUsed(questionString)) getNewQuestion();
+                questionUsed = false;
+                questionUsed(questionString);
 
-                ArrayList<String> optionsList = new ArrayList<String>();
-                optionsList.add(correctString);
-                optionsList.add(wrong1String);
-                optionsList.add(wrong2String);
-                optionsList.add(wrong3String);
-                Collections.shuffle(optionsList);
-                usedQuestionsList.add(questionString);
+                if (!questionUsed) {
+                    ArrayList<String> optionsList = new ArrayList<String>();
+                    optionsList.add(correctString);
+                    optionsList.add(wrong1String);
+                    optionsList.add(wrong2String);
+                    optionsList.add(wrong3String);
+                    Collections.shuffle(optionsList);
+                    usedQuestionsList.add(questionString);
 
-                questionTextBox.setText(questionString);
-                optionButton1.setText(optionsList.get(0));
-                optionButton2.setText(optionsList.get(1));
-                optionButton3.setText(optionsList.get(2));
-                optionButton4.setText(optionsList.get(3));
-
-                myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(String.valueOf(gameID));
-                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        myRef.child("usedQuestion").child(questionString).setValue(questionString);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                    questionTextBox.setText(questionString);
+                    optionButton1.setText(optionsList.get(0));
+                    optionButton2.setText(optionsList.get(1));
+                    optionButton3.setText(optionsList.get(2));
+                    optionButton4.setText(optionsList.get(3));
+                } else return;
             }
 
             @Override
@@ -246,19 +248,29 @@ public class GameplayActivity extends AppCompatActivity {
         // Tom så att man inte kan backa ur spel
     }
 
-    public boolean questionUsed(String questionString) {
+    public void questionUsed(String questionStringCheck) {
         myRef = FirebaseDatabase.getInstance().getReference("activeGames").child(String.valueOf(gameID)).child("usedQuestion");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                questionUsed = snapshot.hasChild(questionString);
+                ArrayList<String> usedQuestionsList = new ArrayList<>();
+
+                for (DataSnapshot snap : snapshot.getChildren()){
+                    String data = snap.getKey();
+                    usedQuestionsList.add(data);
+                }
+                for (int i = 0; i < usedQuestionsList.size(); i++) {
+                    if (usedQuestionsList.get(i).equals(questionStringCheck)) {
+                        questionUsed = true;
+                        getNewQuestion();
+                    }
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(GameplayActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
             }
         });
-        return questionUsed;
     }
 }
