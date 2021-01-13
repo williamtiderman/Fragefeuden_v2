@@ -145,37 +145,24 @@ public class gamesActivity extends AppCompatActivity {
                             String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
                             String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
                             String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-
                             spel0Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-
-
                         }
                         else{
                             String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
                             String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
                             String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-
-
                             spel0Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                         }
-
-
-
                         spel0Knapp.setVisibility(View.VISIBLE);
                         foundGameID = Integer.parseInt(gameIDString);
                         player.getGameList().add(new Game(foundGameID));
                         player.setGame0IDAvalible(false);
                         player.setGame0ID(foundGameID);
                     }
-
-
-
                 }
                 if (snapshot.child("players").child(playerName).child("Game1ID").exists()) {
 
                     String gameIDString = snapshot.child("players").child(playerName).child("Game1ID").getValue().toString();
-
-
                     boolean playerOne;
                     int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
                     if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
@@ -213,7 +200,6 @@ public class gamesActivity extends AppCompatActivity {
                             spel1Knapp.setEnabled(false);
                         }
 
-
                         if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
                             spel1Knapp.setText("Spel-ID: " + gameIDString);
                             spel1Knapp.setEnabled(false);
@@ -225,20 +211,13 @@ public class gamesActivity extends AppCompatActivity {
                             String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
 
                             spel1Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-
-
                         }
                         else{
                             String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
                             String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
                             String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-
-
                             spel1Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                         }
-
-
-
                         spel1Knapp.setVisibility(View.VISIBLE);
                         foundGameID = Integer.parseInt(gameIDString);
                         player.getGameList().add(new Game(foundGameID));
@@ -249,8 +228,6 @@ public class gamesActivity extends AppCompatActivity {
                 if (snapshot.child("players").child(playerName).child("Game2ID").exists()) {
 
                     String gameIDString = snapshot.child("players").child(playerName).child("Game2ID").getValue().toString();
-
-
                     boolean playerOne;
                     int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
                     if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
@@ -260,7 +237,6 @@ public class gamesActivity extends AppCompatActivity {
                         playerOne = false;
                     }
                     if(gameRoundsCheck == MAX_ROUNDS){
-
                         spel2Knapp.setText("Spel avslutat!");
                         spel2Knapp.setVisibility(View.VISIBLE);
                         foundGameID = Integer.parseInt(gameIDString);
@@ -287,33 +263,22 @@ public class gamesActivity extends AppCompatActivity {
                         else if(gameRoundsCheck == -1){
                             spel2Knapp.setEnabled(false);
                         }
-
-
                         if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
                             spel2Knapp.setText("Spel-ID: " + gameIDString);
                             spel2Knapp.setEnabled(false);
                         }
                         else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-
                             String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
                             String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
                             String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-
                             spel2Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-
-
                         }
                         else{
                             String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
                             String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
                             String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-
-
                             spel2Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                         }
-
-
-
                         spel2Knapp.setVisibility(View.VISIBLE);
                         foundGameID = Integer.parseInt(gameIDString);
                         player.getGameList().add(new Game(foundGameID));
@@ -322,10 +287,7 @@ public class gamesActivity extends AppCompatActivity {
                     }
                 }
                 if (snapshot.child("players").child(playerName).child("Game3ID").exists()) {
-
                     String gameIDString = snapshot.child("players").child(playerName).child("Game3ID").getValue().toString();
-
-
                     boolean playerOne;
                     int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
                     if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
@@ -335,7 +297,6 @@ public class gamesActivity extends AppCompatActivity {
                         playerOne = false;
                     }
                     if(gameRoundsCheck == MAX_ROUNDS){
-
                         spel3Knapp.setText("Spel avslutat!");
                         spel3Knapp.setVisibility(View.VISIBLE);
                         foundGameID = Integer.parseInt(gameIDString);
@@ -362,8 +323,6 @@ public class gamesActivity extends AppCompatActivity {
                         else if(gameRoundsCheck == -1){
                             spel3Knapp.setEnabled(false);
                         }
-
-
                         if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
                             spel3Knapp.setText("Spel-ID: " + gameIDString);
                             spel3Knapp.setEnabled(false);
@@ -373,22 +332,14 @@ public class gamesActivity extends AppCompatActivity {
                             String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
                             String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
                             String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-
                             spel3Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-
-
                         }
                         else{
                             String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
                             String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
                             String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-
-
                             spel3Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
                         }
-
-
-
                         spel3Knapp.setVisibility(View.VISIBLE);
                         foundGameID = Integer.parseInt(gameIDString);
                         player.getGameList().add(new Game(foundGameID));
@@ -403,14 +354,12 @@ public class gamesActivity extends AppCompatActivity {
 
                 gameList = player.getGameList();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
             }
         });
     }
-
 
     //Denna kallas när man startar nytt game
     public void createNewGame(View view) {
@@ -436,10 +385,7 @@ public class gamesActivity extends AppCompatActivity {
 
             databasePlayers sendGame = new databasePlayers(gameID, playerOne, playerTwo, playerOnePoints, playerTwoPoints, gameRound, playerOneDone, playerTwoDone);
             myRef.child(String.valueOf(gameID)).setValue(sendGame);
-
             myRef = root.getReference("players");
-
-
             spelKnapp = null;
 
             if (player.getGame0IDAvalible()) {
@@ -470,7 +416,6 @@ public class gamesActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
                 toast.show();
             }
-
             spelKnapp.setText(String.valueOf(int_random));
             spelKnapp.setVisibility(View.VISIBLE);
         } else {
