@@ -382,54 +382,58 @@ public class gamesActivity extends AppCompatActivity {
                 int gameID = Integer.parseInt(inputID);
                 joinGameID.setText("");
                 playerTwo = player.getPlayerName();
-                gameExists = false;
+                if (playerName.equals(playerTwo)) {
+                    gameExists = false;
+                    myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) { //Om spelet finns
+                                myRef.child("playerTwo").setValue(playerTwo);
+                                player.getGameList().add(new Game(gameID));
+                                myRef = FirebaseDatabase.getInstance().getReference().child("players");
 
-                myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
-                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) { //Om spelet finns
-                            myRef.child("playerTwo").setValue(playerTwo);
-                            player.getGameList().add(new Game(gameID));
-                            myRef = FirebaseDatabase.getInstance().getReference().child("players");
+                                if (player.getGame0IDAvalible()) {
+                                    spelKnapp = (Button) findViewById(R.id.spel0);
+                                    player.setGame0ID(gameID);
+                                    myRef.child(String.valueOf(player.getPlayerName())).child("Game0ID").setValue(player.getGame0ID());
+                                    player.setGame0IDAvalible(false);
+                                } else if (player.getGame1IDAvalible()) {
+                                    spelKnapp = (Button) findViewById(R.id.spel1);
+                                    player.setGame1ID(gameID);
+                                    myRef.child(String.valueOf(player.getPlayerName())).child("Game1ID").setValue(player.getGame1ID());
+                                    player.setGame1IDAvalible(false);
+                                } else if (player.getGame2IDAvalible()) {
+                                    spelKnapp = (Button) findViewById(R.id.spel2);
+                                    player.setGame2ID(gameID);
+                                    myRef.child(String.valueOf(player.getPlayerName())).child("Game2ID").setValue(player.getGame2ID());
+                                    player.setGame2IDAvalible(false);
+                                } else if (player.getGame3IDAvalible()) {
+                                    spelKnapp = (Button) findViewById(R.id.spel3);
+                                    player.setGame3ID(gameID);
+                                    myRef.child(String.valueOf(player.getPlayerName())).child("Game3ID").setValue(player.getGame3ID());
+                                    player.setGame3IDAvalible(false);
+                                } else {
+                                    Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
 
-                            if (player.getGame0IDAvalible()) {
-                                spelKnapp = (Button) findViewById(R.id.spel0);
-                                player.setGame0ID(gameID);
-                                myRef.child(String.valueOf(player.getPlayerName())).child("Game0ID").setValue(player.getGame0ID());
-                                player.setGame0IDAvalible(false);
-                            } else if (player.getGame1IDAvalible()) {
-                                spelKnapp = (Button) findViewById(R.id.spel1);
-                                player.setGame1ID(gameID);
-                                myRef.child(String.valueOf(player.getPlayerName())).child("Game1ID").setValue(player.getGame1ID());
-                                player.setGame1IDAvalible(false);
-                            } else if (player.getGame2IDAvalible()) {
-                                spelKnapp = (Button) findViewById(R.id.spel2);
-                                player.setGame2ID(gameID);
-                                myRef.child(String.valueOf(player.getPlayerName())).child("Game2ID").setValue(player.getGame2ID());
-                                player.setGame2IDAvalible(false);
-                            } else if (player.getGame3IDAvalible()) {
-                                spelKnapp = (Button) findViewById(R.id.spel3);
-                                player.setGame3ID(gameID);
-                                myRef.child(String.valueOf(player.getPlayerName())).child("Game3ID").setValue(player.getGame3ID());
-                                player.setGame3IDAvalible(false);
-                            } else {
-                                Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
-                                toast.show();
+                                spelKnapp.setText(String.valueOf(gameID));
+                                spelKnapp.setVisibility(View.VISIBLE);
+                            } else { //om spelet inte finns
+                                Toast.makeText(gamesActivity.this, "Spelet hittades ej!", Toast.LENGTH_SHORT).show();
                             }
-
-                            spelKnapp.setText(String.valueOf(gameID));
-                            spelKnapp.setVisibility(View.VISIBLE);
-                        } else { //om spelet inte finns
-                            Toast.makeText(gamesActivity.this, "Spelet hittades ej!", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else { //om spelare 1 är samma som spelare 2
+                    Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej gå med i ditt eget spel!", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             } else {
                 Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
                 toast.show();
