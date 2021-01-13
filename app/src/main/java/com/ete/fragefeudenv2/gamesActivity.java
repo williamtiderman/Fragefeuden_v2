@@ -382,14 +382,15 @@ public class gamesActivity extends AppCompatActivity {
                 int gameID = Integer.parseInt(inputID);
                 joinGameID.setText("");
                 playerTwo = player.getPlayerName();
-                if (playerName.equals(playerTwo)) {
-                    gameExists = false;
-                    myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
-                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) { //Om spelet finns
-                                myRef.child("playerTwo").setValue(playerTwo);
+                gameExists = false;
+
+                myRef = FirebaseDatabase.getInstance().getReference().child("activeGames").child(String.valueOf(gameID));
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) { //Om spelet finns
+                            myRef.child("playerTwo").setValue(playerTwo);
+                            if (playerName.equals(playerTwo)) {
                                 player.getGameList().add(new Game(gameID));
                                 myRef = FirebaseDatabase.getInstance().getReference().child("players");
 
@@ -420,20 +421,19 @@ public class gamesActivity extends AppCompatActivity {
 
                                 spelKnapp.setText(String.valueOf(gameID));
                                 spelKnapp.setVisibility(View.VISIBLE);
-                            } else { //om spelet inte finns
-                                Toast.makeText(gamesActivity.this, "Spelet hittades ej!", Toast.LENGTH_SHORT).show();
+                            } else { //om spelare 1 är samma som spelare 2
+                                Toast.makeText(gamesActivity.this, "Du kan ej gå med i ditt eget spel!", Toast.LENGTH_SHORT).show();
                             }
+                        } else { //om spelet inte finns
+                            Toast.makeText(gamesActivity.this, "Spelet hittades ej!", Toast.LENGTH_SHORT).show();
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                } else { //om spelare 1 är samma som spelare 2
-                    Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej gå med i ditt eget spel!", Toast.LENGTH_LONG);
-                    toast.show();
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
+                    }
+                });
             } else {
                 Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
                 toast.show();
