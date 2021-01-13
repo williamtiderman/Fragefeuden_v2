@@ -93,308 +93,20 @@ public class gamesActivity extends AppCompatActivity {
                 statsTextView.setText("Vinster: " + wins + " | Förluster: " + losses);
 
                 if (snapshot.child("players").child(playerName).child("Game0ID").exists()) {
-
                     String gameIDString = snapshot.child("players").child(playerName).child("Game0ID").getValue().toString();
-
-
-                    boolean playerOne;
-                    int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
-                    if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-                        playerOne = true;
-                    }
-                    else{
-                        playerOne = false;
-                    }
-
-                    if(gameRoundsCheck == MAX_ROUNDS){
-
-                        spel0Knapp.setText("Spel avslutat!");
-                        spel0Knapp.setVisibility(View.VISIBLE);
-                        foundGameID = Integer.parseInt(gameIDString);
-                        player.getGameList().add(new Game(foundGameID));
-                        player.setGame0IDAvalible(false);
-                        player.setGame0ID(foundGameID);
-                        player.setGame0Finished(true);
-                        spel0Knapp.setBackgroundColor(getResources().getColor(R.color.green));
-                        spel0Knapp.setEnabled(true);
-                    }
-                    else{
-                        if(gameRoundsCheck % 2 == 1 && playerOne == false){
-                            spel0Knapp.setEnabled(true);
-                        }
-                        else if(gameRoundsCheck % 2 == 1 && playerOne == true){
-                            spel0Knapp.setEnabled(false);
-                        }
-                        else if(gameRoundsCheck % 2 == 0 && playerOne == false){
-                            spel0Knapp.setEnabled(false);
-                        }
-                        else if(gameRoundsCheck % 2 == 0 && playerOne == true){
-                            spel0Knapp.setEnabled(true);
-                        }
-                        else if(gameRoundsCheck == -1){
-                            spel0Knapp.setEnabled(false);
-                        }
-
-
-                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
-                            spel0Knapp.setText("Spel-ID: " + gameIDString);
-                            spel0Knapp.setEnabled(false);
-                        }
-                        else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-
-                            String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
-                            String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-                            String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-
-                            spel0Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-
-
-                        }
-                        else{
-                            String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
-                            String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-                            String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-
-
-                            spel0Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-                        }
-
-
-
-                        spel0Knapp.setVisibility(View.VISIBLE);
-                        foundGameID = Integer.parseInt(gameIDString);
-                        player.getGameList().add(new Game(foundGameID));
-                        player.setGame0IDAvalible(false);
-                        player.setGame0ID(foundGameID);
-                    }
-
-
-
+                    getButtons(spel0Knapp,snapshot,0,gameIDString);
                 }
                 if (snapshot.child("players").child(playerName).child("Game1ID").exists()) {
-
                     String gameIDString = snapshot.child("players").child(playerName).child("Game1ID").getValue().toString();
-
-
-                    boolean playerOne;
-                    int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
-                    if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-                        playerOne = true;
-                    }
-                    else{
-                        playerOne = false;
-                    }
-                    if(gameRoundsCheck == MAX_ROUNDS){
-
-                        spel1Knapp.setText("Spel avslutat!");
-                        spel1Knapp.setVisibility(View.VISIBLE);
-                        foundGameID = Integer.parseInt(gameIDString);
-                        player.getGameList().add(new Game(foundGameID));
-                        player.setGame1IDAvalible(false);
-                        player.setGame1ID(foundGameID);
-                        player.setGame1Finished(true);
-                        spel1Knapp.setBackgroundColor(getResources().getColor(R.color.green));
-                        spel1Knapp.setEnabled(true);
-                    }
-                    else{
-                        if(gameRoundsCheck % 2 == 1 && playerOne == false){
-                            spel1Knapp.setEnabled(true);
-                        }
-                        else if(gameRoundsCheck % 2 == 1 && playerOne == true){
-                            spel1Knapp.setEnabled(false);
-                        }
-                        else if(gameRoundsCheck % 2 == 0 && playerOne == false){
-                            spel1Knapp.setEnabled(false);
-                        }
-                        else if(gameRoundsCheck % 2 == 0 && playerOne == true){
-                            spel1Knapp.setEnabled(true);
-                        }
-                        else if(gameRoundsCheck == -1){
-                            spel1Knapp.setEnabled(false);
-                        }
-
-
-                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
-                            spel1Knapp.setText("Spel-ID: " + gameIDString);
-                            spel1Knapp.setEnabled(false);
-                        }
-                        else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-
-                            String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
-                            String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-                            String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-
-                            spel1Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-
-
-                        }
-                        else{
-                            String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
-                            String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-                            String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-
-
-                            spel1Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-                        }
-
-
-
-                        spel1Knapp.setVisibility(View.VISIBLE);
-                        foundGameID = Integer.parseInt(gameIDString);
-                        player.getGameList().add(new Game(foundGameID));
-                        player.setGame1IDAvalible(false);
-                        player.setGame1ID(foundGameID);
-                    }
+                    getButtons(spel1Knapp,snapshot,1,gameIDString);
                 }
                 if (snapshot.child("players").child(playerName).child("Game2ID").exists()) {
-
                     String gameIDString = snapshot.child("players").child(playerName).child("Game2ID").getValue().toString();
-
-
-                    boolean playerOne;
-                    int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
-                    if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-                        playerOne = true;
-                    }
-                    else{
-                        playerOne = false;
-                    }
-                    if(gameRoundsCheck == MAX_ROUNDS){
-
-                        spel2Knapp.setText("Spel avslutat!");
-                        spel2Knapp.setVisibility(View.VISIBLE);
-                        foundGameID = Integer.parseInt(gameIDString);
-                        player.getGameList().add(new Game(foundGameID));
-                        player.setGame2IDAvalible(false);
-                        player.setGame2ID(foundGameID);
-                        player.setGame2Finished(true);
-                        spel2Knapp.setBackgroundColor(getResources().getColor(R.color.green));
-                        spel2Knapp.setEnabled(true);
-                    }
-                    else{
-                        if(gameRoundsCheck % 2 == 1 && playerOne == false){
-                            spel2Knapp.setEnabled(true);
-                        }
-                        else if(gameRoundsCheck % 2 == 1 && playerOne == true){
-                            spel2Knapp.setEnabled(false);
-                        }
-                        else if(gameRoundsCheck % 2 == 0 && playerOne == false){
-                            spel2Knapp.setEnabled(false);
-                        }
-                        else if(gameRoundsCheck % 2 == 0 && playerOne == true){
-                            spel2Knapp.setEnabled(true);
-                        }
-                        else if(gameRoundsCheck == -1){
-                            spel2Knapp.setEnabled(false);
-                        }
-
-
-                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
-                            spel2Knapp.setText("Spel-ID: " + gameIDString);
-                            spel2Knapp.setEnabled(false);
-                        }
-                        else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-
-                            String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
-                            String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-                            String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-
-                            spel2Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-
-
-                        }
-                        else{
-                            String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
-                            String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-                            String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-
-
-                            spel2Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-                        }
-
-
-
-                        spel2Knapp.setVisibility(View.VISIBLE);
-                        foundGameID = Integer.parseInt(gameIDString);
-                        player.getGameList().add(new Game(foundGameID));
-                        player.setGame2IDAvalible(false);
-                        player.setGame2ID(foundGameID);
-                    }
+                    getButtons(spel2Knapp,snapshot,2,gameIDString);
                 }
                 if (snapshot.child("players").child(playerName).child("Game3ID").exists()) {
-
                     String gameIDString = snapshot.child("players").child(playerName).child("Game3ID").getValue().toString();
-
-
-                    boolean playerOne;
-                    int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
-                    if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-                        playerOne = true;
-                    }
-                    else{
-                        playerOne = false;
-                    }
-                    if(gameRoundsCheck == MAX_ROUNDS){
-
-                        spel3Knapp.setText("Spel avslutat!");
-                        spel3Knapp.setVisibility(View.VISIBLE);
-                        foundGameID = Integer.parseInt(gameIDString);
-                        player.getGameList().add(new Game(foundGameID));
-                        player.setGame3IDAvalible(false);
-                        player.setGame3ID(foundGameID);
-                        player.setGame3Finished(true);
-                        spel3Knapp.setBackgroundColor(getResources().getColor(R.color.green));
-                        spel3Knapp.setEnabled(true);
-                    }
-                    else{
-                        if(gameRoundsCheck % 2 == 1 && playerOne == false){
-                            spel3Knapp.setEnabled(true);
-                        }
-                        else if(gameRoundsCheck % 2 == 1 && playerOne == true){
-                            spel3Knapp.setEnabled(false);
-                        }
-                        else if(gameRoundsCheck % 2 == 0 && playerOne == false){
-                            spel3Knapp.setEnabled(false);
-                        }
-                        else if(gameRoundsCheck % 2 == 0 && playerOne == true){
-                            spel3Knapp.setEnabled(true);
-                        }
-                        else if(gameRoundsCheck == -1){
-                            spel3Knapp.setEnabled(false);
-                        }
-
-
-                        if(snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")){
-                            spel3Knapp.setText("Spel-ID: " + gameIDString);
-                            spel3Knapp.setEnabled(false);
-                        }
-                        else if(snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)){
-
-                            String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
-                            String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-                            String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-
-                            spel3Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-
-
-                        }
-                        else{
-                            String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
-                            String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
-                            String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
-
-
-                            spel3Knapp.setText(opponent + " " + opponentScore + "-" + yourScore);
-                        }
-
-
-
-                        spel3Knapp.setVisibility(View.VISIBLE);
-                        foundGameID = Integer.parseInt(gameIDString);
-                        player.getGameList().add(new Game(foundGameID));
-                        player.setGame3IDAvalible(false);
-                        player.setGame3ID(foundGameID);
-                    }
+                    getButtons(spel3Knapp,snapshot,3,gameIDString);
                 }
                 createNewGameButton.setText("Skapa Nytt Spel");
                 createNewGameButton.setEnabled(true);
@@ -409,6 +121,109 @@ public class gamesActivity extends AppCompatActivity {
                 Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+
+    public void getButtons(Button button,DataSnapshot snapshot, int gamePos, String gameIDString) {
+
+        boolean playerOne;
+        int gameRoundsCheck = Integer.parseInt(snapshot.child("activeGames").child(gameIDString).child("gameRound").getValue().toString());
+        if (snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)) {
+            playerOne = true;
+        } else {
+            playerOne = false;
+        }
+
+        if (gameRoundsCheck == MAX_ROUNDS) {
+            button.setText("Spel avslutat!");
+            button.setVisibility(View.VISIBLE);
+            foundGameID = Integer.parseInt(gameIDString);
+            player.getGameList().add(new Game(foundGameID));
+
+            switch (gamePos) {
+                case 0:
+                    player.setGame0IDAvalible(false);
+                    player.setGame0ID(foundGameID);
+                    player.setGame0Finished(true);
+                    break;
+
+                case 1:
+                    player.setGame1IDAvalible(false);
+                    player.setGame1ID(foundGameID);
+                    player.setGame1Finished(true);
+                    break;
+
+                case 2:
+                    player.setGame2IDAvalible(false);
+                    player.setGame2ID(foundGameID);
+                    player.setGame2Finished(true);
+                    break;
+
+                case 3:
+                    player.setGame3IDAvalible(false);
+                    player.setGame3ID(foundGameID);
+                    player.setGame3Finished(true);
+                    break;
+            }
+
+            button.setBackgroundColor(getResources().getColor(R.color.green));
+            button.setEnabled(true);
+        } else {
+            if (gameRoundsCheck % 2 == 1 && playerOne == false) {
+                button.setEnabled(true);
+            } else if (gameRoundsCheck % 2 == 1 && playerOne == true) {
+                button.setEnabled(false);
+            } else if (gameRoundsCheck % 2 == 0 && playerOne == false) {
+                button.setEnabled(false);
+            } else if (gameRoundsCheck % 2 == 0 && playerOne == true) {
+                button.setEnabled(true);
+            } else if (gameRoundsCheck == -1) {
+                button.setEnabled(false);
+            }
+
+            if (snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString().equals("") || snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals("")) {
+                button.setText("Spel-ID: " + gameIDString);
+                button.setEnabled(false);
+            } else if (snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString().equals(playerName)) {
+                String opponent = snapshot.child("activeGames").child(gameIDString).child("playerTwo").getValue().toString();
+                String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
+                String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
+                button.setText(opponent + " " + opponentScore + "-" + yourScore);
+            } else {
+                String opponent = snapshot.child("activeGames").child(gameIDString).child("playerOne").getValue().toString();
+                String yourScore = snapshot.child("activeGames").child(gameIDString).child("playerTwoPoints").getValue().toString();
+                String opponentScore = snapshot.child("activeGames").child(gameIDString).child("playerOnePoints").getValue().toString();
+                button.setText(opponent + " " + opponentScore + "-" + yourScore);
+            }
+
+
+            button.setVisibility(View.VISIBLE);
+            foundGameID = Integer.parseInt(gameIDString);
+            player.getGameList().add(new Game(foundGameID));
+            player.setGame3IDAvalible(false);
+            player.setGame3ID(foundGameID);
+            switch (gamePos) {
+                case 0:
+                    player.setGame0IDAvalible(false);
+                    player.setGame0ID(foundGameID);
+                    break;
+
+                case 1:
+                    player.setGame1IDAvalible(false);
+                    player.setGame1ID(foundGameID);
+                    break;
+
+                case 2:
+                    player.setGame2IDAvalible(false);
+                    player.setGame2ID(foundGameID);
+                    break;
+
+                case 3:
+                    player.setGame3IDAvalible(false);
+                    player.setGame3ID(foundGameID);
+                    break;
+            }
+        }
     }
 
 
