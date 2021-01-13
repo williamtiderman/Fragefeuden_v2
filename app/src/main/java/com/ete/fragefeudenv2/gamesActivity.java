@@ -386,7 +386,7 @@ public class gamesActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) { //Om spelet finns
                             myRef.child("playerTwo").setValue(playerTwo);
-                            if (playerName.equals(playerTwo)) {
+                            if (!playerName.equals(playerTwo)) {
                                 player.getGameList().add(new Game(gameID));
                                 myRef = FirebaseDatabase.getInstance().getReference().child("players");
 
