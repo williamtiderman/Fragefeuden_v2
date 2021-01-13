@@ -236,7 +236,6 @@ public class gamesActivity extends AppCompatActivity {
 
         if (numOfGames < 4) {
             player.getGameList().add(newGame);
-
             root = FirebaseDatabase.getInstance();
             myRef = root.getReference("activeGames");
 
@@ -246,12 +245,10 @@ public class gamesActivity extends AppCompatActivity {
             playerOneDone = "false";
             playerTwoDone = "false";
 
-
             databasePlayers sendGame = new databasePlayers(gameID, playerOne, playerTwo, playerOnePoints, playerTwoPoints, gameRound, playerOneDone, playerTwoDone);
             myRef.child(String.valueOf(gameID)).setValue(sendGame);
 
             myRef = root.getReference("players");
-
 
             spelKnapp = null;
 
@@ -283,7 +280,6 @@ public class gamesActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Du kan ej ha mer än 4 aktiva spel!", Toast.LENGTH_LONG);
                 toast.show();
             }
-
             spelKnapp.setText(String.valueOf(int_random));
             spelKnapp.setVisibility(View.VISIBLE);
         } else {
