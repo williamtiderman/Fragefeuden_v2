@@ -112,10 +112,8 @@ public class gamesActivity extends AppCompatActivity {
                 createNewGameButton.setEnabled(true);
                 joinGameButton.setEnabled(true);
                 leaveGameButton.setEnabled(true);
-
                 gameList = player.getGameList();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(gamesActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
