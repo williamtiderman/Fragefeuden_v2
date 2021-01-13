@@ -137,7 +137,6 @@ public class GameplayActivity extends AppCompatActivity {
                         wrong3String = snap.child("wrong3String").getValue().toString();
                         break;
                     }
-
                     i++;
                 }
 
@@ -269,7 +268,6 @@ public class GameplayActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(GameplayActivity.this, "The read failed: " + error.getCode(), Toast.LENGTH_LONG).show();
